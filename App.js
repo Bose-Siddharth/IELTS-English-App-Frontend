@@ -10,6 +10,7 @@ function App() {
       <Tab.Screen name="Login" component={Login} />
       <Tab.Screen name="Signup" component={Signup} />
     </Tab.Navigator>
+    
   );
 }
 
