@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import * as ScreenOrientation from "expo-screen-orientation";
 
-function LandingPageScreen({ authenticated, setAuthenticated, navigation }) {
+function LandingPageScreen({ auth, setAuth, navigation }) {
   const [orientationIsLandscape, setOrientation] = useState(true);
   async function changeScreenOrientation() {
     if (orientationIsLandscape == true) {
@@ -55,8 +55,7 @@ function LandingPageScreen({ authenticated, setAuthenticated, navigation }) {
           <TouchableOpacity
             style={styles.btnSignIn}
             onPress={() => {
-              setAuthenticated(false);
-              navigation.navigate("LoginScreen");
+              navigation.navigate("Login");
               //handle onPress
             }}
           >
@@ -66,8 +65,7 @@ function LandingPageScreen({ authenticated, setAuthenticated, navigation }) {
           <TouchableOpacity
             style={styles.btnGS}
             onPress={() => {
-              setAuthenticated(false);
-              navigation.navigate("LoginScreen");
+              navigation.navigate("Signup");
               //handle onPress
             }}
           >
