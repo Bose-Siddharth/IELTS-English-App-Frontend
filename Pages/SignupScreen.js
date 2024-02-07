@@ -9,8 +9,10 @@ import {
 } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { useLogin } from "../context/LoginProvider";
 
-function SignupScreen1({ auth, setAuth, navigation }) {
+function SignupScreen({ navigation }) {
+  const { setIsLoggedIn } = useLogin();
   const validationSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
     email: yup
@@ -28,35 +30,24 @@ function SignupScreen1({ auth, setAuth, navigation }) {
     department: yup.string().required("Department is required"),
   });
   async function handleSubmit(values) {
+    console.log(values);
     try {
-      // Replace 'https://example.com/api' with your actual API endpoint
-      const apiUrl = "http://localhost:8000/auth/signup";
+      let response = await fetch(
+        " https://c045-59-144-53-180.ngrok-free.app/auth/signup",
+        {
+          method: "POST",
+          body: JSON.stringify(values),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-
-      if (response.success) {
-        // Handle success (e.g., navigate to the next screen)
-        setAuth(true);
-        navigation.navigate("Home");
-      } else {
-        // Handle errors or display an error message
-        console.error(
-          "Failed to submit form:",
-          response.status,
-          response.statusText
-        );
-      }
+      let data = await response.json();
+      console.log(data);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
-    // setAuth(false);
-    // navigation.navigate("Home");
+    // setIsLoggedIn(true);
+    // navigation.navigate("HomeScreen");
   }
   return (
     <Formik
@@ -186,7 +177,7 @@ function SignupScreen1({ auth, setAuth, navigation }) {
   );
 }
 
-export default SignupScreen1;
+export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {

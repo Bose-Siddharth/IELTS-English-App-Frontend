@@ -9,12 +9,14 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { useLogin } from "../context/LoginProvider";
 // import { Icon } from "react-native-vector-icons/Icon";
 
-function LoginScreen({ auth, setAuth, navigation }) {
+function LoginScreen({ navigation }) {
+  const { setIsLoggedIn } = useLogin();
   function submitHandler() {
-    setAuth(false);
-    navigation.navigate("Home");
+    setIsLoggedIn(true);
+    navigation.navigate("Home", { screen: "Home" });
   }
   function forgotPassHandler() {
     Alert.alert("Pass Change");
