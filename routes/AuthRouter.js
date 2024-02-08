@@ -10,6 +10,7 @@ export default function AuthRouter() {
       screenOptions={{ headerShown: false }}
       initialRouteName="Login"
     >
+      {/* <Tab.Screen name="Signup" component={SignupScreen} /> */}
       <Tab.Screen name="Signup" component={SignupScreen} />
       <Tab.Screen name="Login" component={LoginScreen} />
     </Tab.Navigator>
