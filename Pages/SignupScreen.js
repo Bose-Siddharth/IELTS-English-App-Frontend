@@ -5,7 +5,9 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ImageBackground,
   View,
+  Keyboard,
 } from "react-native";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -34,7 +36,7 @@ function SignupScreen({ navigation }) {
   async function handleSubmit(values) {
     console.log(values);
     try {
-      let response = await fetch("http://192.168.1.6:8080/auth/signup", {
+      let response = await fetch("http://192.168.90.88:8080/auth/signup", {
         method: "POST",
         body: JSON.stringify(values),
         headers: { "Content-Type": "application/json" },
@@ -73,114 +75,119 @@ function SignupScreen({ navigation }) {
         errors,
         touched,
       }) => (
-        <ScrollView contentContainerStyle={styles.outerFormContainer}>
-          <View style={styles.container}>
-            <View style={styles.headingContainer}>
-              <Text style={[styles.headerText, styles.textCenter]}>
-                Create your profile
-              </Text>
-              <Text style={[styles.headerSubText, styles.textCenter]}>
-                Enter your details to create and account
-              </Text>
-              {error && (
-                <Text style={[styles.errorText, styles.textCenter]}>
-                  {error}
+        <View style={styles.container}>
+          <ImageBackground
+            source={require("../assets/appBg.png")}
+            style={{ flex: 1, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+          >
+            <ScrollView contentContainerStyle={styles.outerFormContainer}>
+              <View style={styles.headingContainer}>
+                <Text style={[styles.headerText, styles.textCenter]}>
+                  Create your profile
                 </Text>
-              )}
-            </View>
-            <View style={styles.formContainer}>
-              <TextInput
-                style={styles.input}
-                placeholder="Name"
-                onChangeText={handleChange("name")}
-                onBlur={handleBlur("name")}
-                value={values.name}
-              />
-              {touched.name && errors.name && (
-                <Text style={styles.errorText}>{errors.name}</Text>
-              )}
-
-              {/* Repeat this pattern for other TextInput fields */}
-              <TextInput
-                style={styles.input}
-                placeholder="E-mail"
-                onChangeText={handleChange("email")}
-                onBlur={handleBlur("email")}
-                value={values.email}
-              />
-              {touched.email && errors.email && (
-                <Text style={styles.errorText}>{errors.email}</Text>
-              )}
-
-              {/* Repeat this pattern for other TextInput fields */}
-
-              {/* Repeat this pattern for other TextInput fields */}
-              <TextInput
-                style={styles.input}
-                placeholder="Mobile Number"
-                onChangeText={handleChange("mobileNumber")}
-                onBlur={handleBlur("mobileNumber")}
-                value={values.mobileNumber}
-                keyboardType="numeric"
-              />
-              {touched.mobileNumber && errors.mobileNumber && (
-                <Text style={styles.errorText}>{errors.mobileNumber}</Text>
-              )}
-
-              {/* Repeat this pattern for other TextInput fields */}
-              <TextInput
-                style={styles.input}
-                placeholder="Password"
-                onChangeText={handleChange("password")}
-                onBlur={handleBlur("password")}
-                value={values.password}
-                secureTextEntry={true}
-              />
-              {touched.password && errors.password && (
-                <Text style={styles.errorText}>{errors.password}</Text>
-              )}
-
-              <View style={[styles.input, styles.picker]}>
-                <Picker
-                  selectedValue={values.department}
-                  onValueChange={(itemValue) =>
-                    handleChange("department")(itemValue)
-                  }
-                >
-                  <Picker.Item
-                    label="Select Department"
-                    value=""
-                    color="#696a72"
-                  />
-                  <Picker.Item
-                    label="Department 1"
-                    value="Department 1"
-                    color="#696a72"
-                  />
-                  <Picker.Item
-                    label="Department 2"
-                    value="Department 2"
-                    color="#696a72"
-                  />
-                  <Picker.Item
-                    label="Department 3"
-                    value="Department 3"
-                    color="#696a72"
-                  />
-                </Picker>
+                <Text style={[styles.headerSubText, styles.textCenter]}>
+                  Enter your details to create and account
+                </Text>
+                {error && (
+                  <Text style={[styles.errorText, styles.textCenter]}>
+                    {error}
+                  </Text>
+                )}
               </View>
-              {touched.department && errors.department && (
-                <Text style={styles.errorText}>{errors.department}</Text>
-              )}
+              <View style={styles.formContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Name"
+                  onChangeText={handleChange("name")}
+                  onBlur={handleBlur("name")}
+                  value={values.name}
+                />
+                {touched.name && errors.name && (
+                  <Text style={styles.errorText}>{errors.name}</Text>
+                )}
 
-              <Pressable style={styles.registerBtn} onPress={handleSubmit}>
-                <Text style={[styles.textWhite, styles.submitText]}>
-                  Register Staff
-                </Text>
-              </Pressable>
-            </View>
-          </View>
-        </ScrollView>
+                {/* Repeat this pattern for other TextInput fields */}
+                <TextInput
+                  style={styles.input}
+                  placeholder="E-mail"
+                  onChangeText={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  value={values.email}
+                />
+                {touched.email && errors.email && (
+                  <Text style={styles.errorText}>{errors.email}</Text>
+                )}
+
+                {/* Repeat this pattern for other TextInput fields */}
+
+                {/* Repeat this pattern for other TextInput fields */}
+                <TextInput
+                  style={styles.input}
+                  placeholder="Mobile Number"
+                  onChangeText={handleChange("mobileNumber")}
+                  onBlur={handleBlur("mobileNumber")}
+                  value={values.mobileNumber}
+                  keyboardType="numeric"
+                />
+                {touched.mobileNumber && errors.mobileNumber && (
+                  <Text style={styles.errorText}>{errors.mobileNumber}</Text>
+                )}
+
+                {/* Repeat this pattern for other TextInput fields */}
+                <TextInput
+                  style={styles.input}
+                  placeholder="Password"
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  value={values.password}
+                  secureTextEntry={true}
+                />
+                {touched.password && errors.password && (
+                  <Text style={styles.errorText}>{errors.password}</Text>
+                )}
+
+                <View style={[styles.input, styles.picker]}>
+                  <Picker
+                    selectedValue={values.department}
+                    onValueChange={(itemValue) =>
+                      handleChange("department")(itemValue)
+                    }
+                  >
+                    <Picker.Item
+                      label="Select Department"
+                      value=""
+                      color="#696a72"
+                    />
+                    <Picker.Item
+                      label="Department 1"
+                      value="Department 1"
+                      color="#696a72"
+                    />
+                    <Picker.Item
+                      label="Department 2"
+                      value="Department 2"
+                      color="#696a72"
+                    />
+                    <Picker.Item
+                      label="Department 3"
+                      value="Department 3"
+                      color="#696a72"
+                    />
+                  </Picker>
+                </View>
+                {touched.department && errors.department && (
+                  <Text style={styles.errorText}>{errors.department}</Text>
+                )}
+
+                <Pressable style={styles.registerBtn} onPress={handleSubmit}>
+                  <Text style={[styles.textWhite, styles.submitText]}>
+                    Register Staff
+                  </Text>
+                </Pressable>
+              </View>
+            </ScrollView>
+          </ImageBackground>
+        </View>
       )}
     </Formik>
   );
@@ -201,14 +208,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: "2%",
     // marginTop: "3%",
-    gap: 10,
+    // gap: 10,
   },
   formContainer: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     height: "80%",
     width: "100%",
     gap: 15,
+    paddingTop: "10%",
   },
   headerText: {
     color: "#1F41BB",
@@ -227,6 +235,8 @@ const styles = StyleSheet.create({
     width: "80%",
     borderRadius: 8,
     backgroundColor: "#e0e6f6",
+    borderWidth: 2,
+    borderColor: "#1F41BB",
   },
   picker: {
     padding: 0,
@@ -239,6 +249,8 @@ const styles = StyleSheet.create({
     backgroundColor: "blue",
     paddingHorizontal: "8%",
     paddingVertical: "5%",
+    marginTop: Keyboard.isVisible ? null : "auto",
+    marginBottom: Keyboard.isVisible ? null : "20%",
   },
   textWhite: {
     color: "white",
@@ -249,6 +261,6 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: "red",
-    marginTop: 5,
+    // marginTop: 5,
   },
 });

@@ -14,23 +14,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useLogin } from "../context/LoginProvider";
-
-// Screens
-function HomeScreen({ navigation }) {
-  return (
-    <View style={styles.screen}>
-      <Text>Home Screen</Text>
-    </View>
-  );
-}
-
-function ProfileScreen({ navigation }) {
-  return (
-    <View style={styles.screen}>
-      <Text>Profile Screen</Text>
-    </View>
-  );
-}
+import HomeScreen from "../Pages/HomeScreen";
 
 // Custom drawer content component
 function CustomDrawerContent({ navigation }) {
@@ -72,11 +56,13 @@ const Drawer = createDrawerNavigator();
 
 const CustomDrawerHeader = ({ navigation }) => {
   return (
-    <TouchableOpacity
-      style={styles.menuButton}
-      onPress={() => navigation.toggleDrawer()}
-    >
-      <Icon name="bars" size={24} color="#000000" />
+    <TouchableOpacity style={styles.menuButton}>
+      <Icon
+        name="bars"
+        size={24}
+        color="#000000"
+        onPress={() => navigation.toggleDrawer()}
+      />
     </TouchableOpacity>
   );
 };
@@ -86,11 +72,12 @@ export default function AppRouter() {
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
-        header: (props) => <CustomDrawerHeader {...props} />,
+        // header: (props) => <CustomDrawerHeader {...props} />,
+        headerShown: false,
       }}
     >
       <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Profile" component={ProfileScreen} />
+      <Drawer.Screen name="Profile" component={HomeScreen} />
       {/* Add more screens as needed */}
     </Drawer.Navigator>
   );
@@ -101,11 +88,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ccc",
+    backgroundColor: "#fff",
   },
   drawerContent: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight + 20,
+    // paddingTop: StatusBar.currentHeight,
   },
   logoutButton: {
     flexDirection: "row",
@@ -122,7 +109,8 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   menuButton: {
-    marginLeft: 20,
-    marginTop: StatusBar.currentHeight + 50,
+    paddingLeft: 20,
+    backgroundColor: "#ffffff",
+    // marginTop: StatusBar.currentHeight,
   },
 });

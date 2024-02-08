@@ -3,6 +3,8 @@ import * as Yup from "yup";
 import React, { useState } from "react";
 import {
   Alert,
+  Dimensions,
+  ImageBackground,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -11,11 +13,15 @@ import {
   View,
 } from "react-native";
 import { useLogin } from "../context/LoginProvider";
+import Icon from "react-native-vector-icons/FontAwesome";
+import Svg, { Image } from "react-native-svg";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string().required("Password is required"),
 });
+
+const { width, height } = Dimensions.get("window");
 
 function LoginScreen({ navigation }) {
   const { setIsLoggedIn } = useLogin();
@@ -24,7 +30,7 @@ function LoginScreen({ navigation }) {
     // Your login logic here
     console.log(values);
     try {
-      let response = await fetch("http://192.168.1.6:8080/auth/login", {
+      let response = await fetch("http://192.168.90.88:8080/auth/login", {
         method: "POST",
         body: JSON.stringify(values),
         headers: { "Content-Type": "application/json" },
@@ -33,7 +39,7 @@ function LoginScreen({ navigation }) {
       let data = await response.json();
       if (!data.success) {
         setError(data.message);
-        console.log(error);
+        console.log(data.message);
       } else {
         setIsLoggedIn(true);
       }
@@ -61,84 +67,102 @@ function LoginScreen({ navigation }) {
         touched,
       }) => (
         <View style={styles.container}>
-          <View style={styles.headingContainer}>
-            <Text style={[styles.headerText, styles.textCenter]}>
-              Login Here
-            </Text>
-            <Text style={[styles.headerSubText, styles.textCenter]}>
-              Welcome Back!
-            </Text>
-            <Text style={[styles.headerSubText, styles.textCenter]}>
-              You've been missed
-            </Text>
-            {error && (
-              <Text style={[styles.errorText, styles.textCenter]}>{error}</Text>
-            )}
-          </View>
-          <View style={styles.outerFormContainer}>
-            <ScrollView contentContainerStyle={styles.formContainer}>
-              <TextInput
-                style={styles.input}
-                placeholder="Email"
-                onChangeText={handleChange("email")}
-                onBlur={handleBlur("email")}
-                value={values.email}
-              />
-              {touched.email && errors.email && (
-                <Text style={styles.errorText}>{errors.email}</Text>
-              )}
-
-              <TextInput
-                style={styles.input}
-                placeholder="Password"
-                secureTextEntry
-                onChangeText={handleChange("password")}
-                onBlur={handleBlur("password")}
-                value={values.password}
-              />
-              {touched.password && errors.password && (
-                <Text style={styles.errorText}>{errors.password}</Text>
-              )}
-
-              <View style={{ gap: 20, alignItems: "center" }}>
-                <Pressable
-                  style={styles.forgotPassBtn}
-                  onPress={forgotPassHandler}
-                >
-                  <Text style={[styles.textBlue, styles.submitText]}>
-                    Forgot your password?
-                  </Text>
-                </Pressable>
-                <Pressable style={styles.registerBtn} onPress={handleSubmit}>
-                  <Text
-                    style={[
-                      styles.textWhite,
-                      styles.submitText,
-                      styles.textUpper,
-                    ]}
-                  >
-                    Register Staff
-                  </Text>
-                </Pressable>
-                <Pressable
-                  style={styles.createAccount}
-                  onPress={forgotPassHandler}
-                >
-                  <Text style={[styles.textGray, styles.submitText]}>
-                    Create new account
-                  </Text>
-                </Pressable>
-                <Text style={[styles.textBlue, styles.submitText]}>
-                  Or continue with
+          <ImageBackground
+            source={require("../assets/appBg.png")}
+            style={{ flex: 1, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+          >
+            <View style={styles.headingContainer}>
+              <Text style={[styles.headerText, styles.textCenter]}>
+                Login Here
+              </Text>
+              <Text style={[styles.headerSubText, styles.textCenter]}>
+                Welcome Back!
+              </Text>
+              <Text style={[styles.headerSubText, styles.textCenter]}>
+                You've been missed
+              </Text>
+              {error && (
+                <Text style={[styles.errorText, styles.textCenter]}>
+                  {error}
                 </Text>
-                <View>
-                  {/* <Icon name="rocket" size={30} color="#900" />
-                  <Icon name="rocket" size={30} color="#900" />
-                  <Icon name="rocket" size={30} color="#900" /> */}
+              )}
+            </View>
+            <ScrollView contentContainerStyle={styles.outerFormContainer}>
+              <View style={styles.formContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email"
+                  onChangeText={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  value={values.email}
+                />
+                {touched.email && errors.email && (
+                  <Text style={styles.errorText}>{errors.email}</Text>
+                )}
+
+                <TextInput
+                  style={styles.input}
+                  placeholder="Password"
+                  secureTextEntry
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  value={values.password}
+                />
+                {touched.password && errors.password && (
+                  <Text style={styles.errorText}>{errors.password}</Text>
+                )}
+
+                <View style={{ gap: 20, alignItems: "center" }}>
+                  <Pressable
+                    style={styles.forgotPassBtn}
+                    onPress={forgotPassHandler}
+                  >
+                    <Text style={[styles.textBlue, styles.submitText]}>
+                      Forgot your password?
+                    </Text>
+                  </Pressable>
+                  <Pressable style={styles.registerBtn} onPress={handleSubmit}>
+                    <Text
+                      style={[
+                        styles.textWhite,
+                        styles.submitText,
+                        styles.textUpper,
+                      ]}
+                    >
+                      Login
+                    </Text>
+                  </Pressable>
+                  <Pressable
+                    style={styles.createAccount}
+                    onPress={forgotPassHandler}
+                  >
+                    <Text style={[styles.textGray, styles.submitText]}>
+                      Create new account
+                    </Text>
+                  </Pressable>
+                  <Text style={[styles.textBlue, styles.submitText]}>
+                    Or continue with
+                  </Text>
+                  <View style={styles.iconContainer}>
+                    <Icon
+                      name="google"
+                      size={24}
+                      color="#000000"
+                      style={styles.icon}
+                      onPress={() => {}}
+                    />
+                    <Icon
+                      name="facebook"
+                      size={24}
+                      color="#000000"
+                      style={styles.icon}
+                      onPress={() => {}}
+                    />
+                  </View>
                 </View>
               </View>
             </ScrollView>
-          </View>
+          </ImageBackground>
         </View>
       )}
     </Formik>
@@ -151,10 +175,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+    resizeMode: "cover",
   },
   headingContainer: {
     height: "10%",
     marginTop: "20%",
+    gap: 10,
   },
   outerFormContainer: {
     flex: 1,
@@ -167,7 +193,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "80%",
     width: "100%",
-    gap: 40,
+    gap: 10,
+  },
+  iconContainer: {
+    flexDirection: "row",
+    gap: 30,
   },
   headerText: {
     color: "#1F41BB",
@@ -187,6 +217,8 @@ const styles = StyleSheet.create({
     width: "80%",
     borderRadius: 8,
     backgroundColor: "#e0e6f6",
+    borderWidth: 2,
+    borderColor: "#1F41BB",
   },
   picker: {
     padding: 0,
@@ -196,6 +228,7 @@ const styles = StyleSheet.create({
   },
   registerBtn: {
     borderRadius: 10,
+    width: Dimensions.get("window").width * 0.75,
     backgroundColor: "blue",
     paddingHorizontal: "8%",
     paddingVertical: "5%",
@@ -205,6 +238,7 @@ const styles = StyleSheet.create({
   },
   submitText: {
     fontWeight: "bold",
+    textAlign: "center",
   },
   textUpper: {
     textTransform: "uppercase",
@@ -220,6 +254,26 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: "red",
-    marginTop: 5,
+    // marginTop: 5,
+  },
+  icon: {
+    backgroundColor: "#ccc",
+    padding: "3%",
+    width: 60,
+    borderRadius: 8,
+    textAlign: "center",
+  },
+  svgContainer: {
+    position: "absolute",
+    borderWidth: 1,
+    borderColor: "#000",
+  },
+  bottomLeft: {
+    left: 0,
+    bottom: 0,
+  },
+  topRight: {
+    right: 0,
+    top: 0,
   },
 });
