@@ -10,9 +10,11 @@ import {
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useLogin } from "../context/LoginProvider";
+import { useState } from "react";
 
 function SignupScreen({ navigation }) {
   const { setIsLoggedIn } = useLogin();
+  const [error, setError] = useState("");
   const validationSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
     email: yup
@@ -32,17 +34,19 @@ function SignupScreen({ navigation }) {
   async function handleSubmit(values) {
     console.log(values);
     try {
-      let response = await fetch(
-        " https://c045-59-144-53-180.ngrok-free.app/auth/signup",
-        {
-          method: "POST",
-          body: JSON.stringify(values),
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      let response = await fetch("http://192.168.1.6:8080/auth/signup", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: { "Content-Type": "application/json" },
+      });
 
       let data = await response.json();
-      console.log(data);
+      if (!data.success) {
+        setError(data.message);
+        console.log(error);
+      } else {
+        setIsLoggedIn(true);
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -69,17 +73,22 @@ function SignupScreen({ navigation }) {
         errors,
         touched,
       }) => (
-        <View style={styles.container}>
-          <View style={styles.headingContainer}>
-            <Text style={[styles.headerText, styles.textCenter]}>
-              Create your profile
-            </Text>
-            <Text style={[styles.headerSubText, styles.textCenter]}>
-              Enter your details to create and account
-            </Text>
-          </View>
-          <View style={styles.outerFormContainer}>
-            <ScrollView contentContainerStyle={styles.formContainer}>
+        <ScrollView contentContainerStyle={styles.outerFormContainer}>
+          <View style={styles.container}>
+            <View style={styles.headingContainer}>
+              <Text style={[styles.headerText, styles.textCenter]}>
+                Create your profile
+              </Text>
+              <Text style={[styles.headerSubText, styles.textCenter]}>
+                Enter your details to create and account
+              </Text>
+              {error && (
+                <Text style={[styles.errorText, styles.textCenter]}>
+                  {error}
+                </Text>
+              )}
+            </View>
+            <View style={styles.formContainer}>
               <TextInput
                 style={styles.input}
                 placeholder="Name"
@@ -169,9 +178,9 @@ function SignupScreen({ navigation }) {
                   Register Staff
                 </Text>
               </Pressable>
-            </ScrollView>
+            </View>
           </View>
-        </View>
+        </ScrollView>
       )}
     </Formik>
   );
