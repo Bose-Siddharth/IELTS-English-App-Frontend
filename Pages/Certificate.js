@@ -9,10 +9,8 @@ const CertificateTemplate = ({ recipientName }) => {
         <Text style={styles.subtitle}>This is to certify that</Text>
         <Text style={styles.recipient}>{recipientName}</Text>
         <Text style={styles.message}>
-          has successfully completed the course
-        </Text>
-        
-      </View>
+          has successfully completed the course</Text>
+        </View>
    
   );
 };
@@ -24,6 +22,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '100%',
+    
   },
   content: {
     alignItems: 'center',
