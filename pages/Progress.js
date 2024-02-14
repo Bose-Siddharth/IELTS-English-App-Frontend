@@ -18,14 +18,19 @@ const Progress = () => {
     Keyboard.dismiss();
   };
 
+  const pointerPosition = progress * 230; // Position of the pointer based on progress
+
   return (
     <TouchableWithoutFeedback onPress={handleKey}>
       <View style={styles.container}>
+        <View style={styles.text1}>
+          <Text style={styles.heading}>Progress</Text>
+        </View>
         {Platform.OS === 'ios' ? (
           <ProgressViewIOS
             progress={progress}
             style={styles.progressBar}
-            trackTintColor="#ccc"
+            trackTintColor="#1F41BB"
             progressTintColor="#1F41BB"
           />
         ) : (
@@ -37,17 +42,18 @@ const Progress = () => {
               style={styles.progressBarAndroid}
               color="#1F41BB"
             />
-            
             <View style={styles.dott}>
-              <View style={[styles.dot, { left: `${progress * 200 - 4}px` }]} />
-              <View style={[styles.dot, { left: `${progress * 200 + 66 - 4}px` }]} />
-              <View style={[styles.dot, { left: `${progress * 200 + 132 - 4}px` }]} />
-              <View style={[styles.dot, { left: `${progress * 200 + 132 - 4}px` }]} />
+              <View style={styles.dot} />
+              <View style={styles.dot} />
+              <View style={styles.dot} />
+              <View style={styles.dot} />
             </View>
+            {progress > 0 && (
+              <View style={[styles.pointer, { left: pointerPosition }]} />
+            )}
           </View>
         )}
         <Text>Progress: {Math.round(progress * 100)}%</Text>
-       
         <TextInput
           style={styles.input}
           onChangeText={setInputValue}
@@ -69,19 +75,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+    marginBottom: "40%"
   },
   progressBar: {
     width: 300,
     marginTop: 20,
   },
   progressBarContainer: {
-    width: 240, 
+    width: 240,
     marginTop: 20,
-    position: 'relative',  
+    position: 'relative',
   },
   progressBarAndroid: {
     width: '100%',
-    backgroundColor: 'transparent',  
+    backgroundColor: 'transparent',
   },
   button: {
     marginTop: 20,
@@ -119,8 +126,22 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -10,
     width: '100%',
-    justifyContent:'space-evenly',
-    marginTop:"5%",
+    justifyContent: 'space-evenly',
+    marginTop: "5%",
+  },
+  pointer: {
+    width: 7,
+    height: 27,
+    backgroundColor: 'red',
+    position: 'absolute',
+    top: -25,
+  },
+  heading: {
+    fontSize: 35,
+    color: '#1F41BB',
+    fontWeight: 'bold',
+    marginRight: "40%",
+    marginBottom: "50%"
   },
 });
 

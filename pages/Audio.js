@@ -50,7 +50,7 @@ const Audio = () => {
         } else {
           await sound.playAsync();
         }
-        setIsPlaying(!isPlaying); // Toggle the isPlaying state
+        setIsPlaying(!isPlaying); 
       } catch (error) {
        /* console.error('Error toggling playback', error);*/
       }
@@ -61,12 +61,12 @@ const Audio = () => {
   const handleSliderChange = async (value) => {
     if (sound !== null) {
       const newPosition = value;
-      setPosition(newPosition); // Update the position state
+      setPosition(newPosition); 
       try {
-        await sound.setPositionAsync(newPosition); // Seek the audio to the new position
+        await sound.setPositionAsync(newPosition); 
         if (!isPlaying) {
-          await sound.playAsync(); // Start playing if not already playing
-          setIsPlaying(true); // Update the isPlaying state
+          await sound.playAsync();
+          setIsPlaying(true);
         }
       } catch (error) {
         Alert.alert('Error setting audio position:', error);
@@ -112,7 +112,7 @@ const Audio = () => {
     return `${padWithZeroes(minutes)}:${padWithZeroes(seconds)}`;
   };
 
-  // Function to pad single digit numbers with a leading zero
+  
   const padWithZeroes = (number) => {
     return number < 10 ? `0${number}` : `${number}`;
   };
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    /* marginTop: 20,*/
+    
     marginBottom: "76%",
     backgroundColor: 'lightgray',
     borderColor: 'black',
