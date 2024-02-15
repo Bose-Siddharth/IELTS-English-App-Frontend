@@ -39,7 +39,7 @@ const Audio = () => {
         }
       });
     } catch (error) {
-     /* console.error('Error loading audio', error);*/
+     
     }
   };
   const togglePlayback = async () => {
@@ -52,7 +52,6 @@ const Audio = () => {
         }
         setIsPlaying(!isPlaying); 
       } catch (error) {
-       /* console.error('Error toggling playback', error);*/
       }
     }
   };
