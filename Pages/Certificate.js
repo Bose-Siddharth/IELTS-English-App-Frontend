@@ -34,7 +34,7 @@ const CertificateTemplate = ({ recipientName }) => {
         
   );
 }
-export default CertificateTemplate;
+// export default CertificateTemplate;
 export default DownloadCertificateButton;
 
 const styles = StyleSheet.create({
