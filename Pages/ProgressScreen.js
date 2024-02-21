@@ -1,9 +1,19 @@
-import { View, Text, StyleSheet, StatusBar } from "react-native";
+import { View, Text, StyleSheet, StatusBar, Platform } from "react-native";
 import React from "react";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const ProgressScreen = () => {
   return (
-    <View style={{ flex: 1, padding: 40, marginTop: StatusBar.currentHeight }}>
+    <View
+      style={{
+        flex: 1,
+        padding: 40,
+        marginTop:
+          Platform.OS === "android"
+            ? StatusBar.currentHeight
+            : StatusBar.currentHeight + 40,
+      }}
+    >
       <View style={styles.box}>
         <View style={[styles.dot, { top: "-4%" }]}></View>
         <View style={styles.diagonal}></View>
@@ -25,6 +35,20 @@ const ProgressScreen = () => {
             },
           ]}
         ></View>
+        <View
+          style={{
+            padding: 16,
+            position: "absolute",
+            top: "-15%",
+            right: "2.5%",
+            borderRadius: 50,
+            borderColor: "#c0088c",
+            overflow: Platform.OS === "ios" ? "hidden" : null,
+            backgroundColor: "blue",
+          }}
+        >
+          <Icon name="flag" size={30} color="red" />
+        </View>
       </View>
       <View style={styles.box}>
         <View style={styles.diagonal2}></View>
@@ -94,8 +118,8 @@ const styles = StyleSheet.create({
   },
   diagonal: {
     flex: 1,
-    borderTopWidth: 8,
-    borderLeftWidth: 5,
+    borderTopWidth: 10,
+    borderLeftWidth: 10,
     borderColor: "#2743b8",
     borderTopRightColor: "#000",
     borderTopLeftRadius: 200,
