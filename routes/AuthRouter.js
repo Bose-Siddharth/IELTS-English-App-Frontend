@@ -3,6 +3,7 @@ import LoginScreen from "../Pages/LoginScreen";
 import SignupScreen from "../Pages/SignupScreen";
 import LandingPageScreen from "../Pages/LandingPageScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
+import ProgressScreen from "../Pages/ProgressScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -10,7 +11,7 @@ export default function AuthRouter() {
   return (
     <Tab.Navigator
       screenOptions={{ headerShown: false, tabBarActiveTintColor: "#000" }}
-      initialRouteName="LandingPageScreen"
+      initialRouteName="ProgressScreen"
     >
       <Tab.Screen
         name="LandingPageScreen"
@@ -23,6 +24,7 @@ export default function AuthRouter() {
           },
         }}
       />
+      <Tab.Screen name="ProgressScreen" component={ProgressScreen} />
       <Tab.Screen
         name="Login"
         component={LoginScreen}

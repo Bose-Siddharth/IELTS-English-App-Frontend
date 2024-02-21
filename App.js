@@ -8,7 +8,7 @@ import { StatusBar } from "expo-status-bar";
 const App = () => {
   return (
     <>
-      <StatusBar style="auto" />
+      <StatusBar style="auto" backgroundColor="#fff" />
       <LoginProvider>
         <NavigationContainer>
           <MainNavigator />
