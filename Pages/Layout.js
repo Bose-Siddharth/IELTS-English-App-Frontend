@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -44,11 +43,13 @@ function Layout({ children, title }) {
               name="sign-out"
               size={24}
               color="#858585"
-              onPress={setIsLoggedIn(false)}
+              onPress={(prev) => {
+                setIsLoggedIn(!prev);
+              }}
             />
           </TouchableOpacity>
         </View>
-        <View>{children}</View>
+        <View style={{ flex: 1 }}>{children}</View>
       </ImageBackground>
     </View>
   );
@@ -64,6 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     // paddingHorizontal: "2%",
     marginTop: StatusBar.currentHeight,
+    paddingBottom: "5%",
   },
   header: {
     flexDirection: "row",

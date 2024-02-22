@@ -11,7 +11,7 @@ export default function AuthRouter() {
   return (
     <Tab.Navigator
       screenOptions={{ headerShown: false, tabBarActiveTintColor: "#000" }}
-      initialRouteName="ProgressScreen"
+      initialRouteName="LandingPageScreen"
     >
       <Tab.Screen
         name="LandingPageScreen"
@@ -24,7 +24,6 @@ export default function AuthRouter() {
           },
         }}
       />
-      <Tab.Screen name="ProgressScreen" component={ProgressScreen} />
       <Tab.Screen
         name="Login"
         component={LoginScreen}

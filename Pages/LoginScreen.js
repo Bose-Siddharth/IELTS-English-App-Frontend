@@ -24,13 +24,13 @@ const validationSchema = Yup.object().shape({
 const { width, height } = Dimensions.get("window");
 
 function LoginScreen({ navigation }) {
-  const { setIsLoggedIn } = useLogin();
+  const { setIsLoggedIn, isLoggedIn } = useLogin();
   const [error, setError] = useState("");
   async function submitHandler(values) {
     // Your login logic here
     console.log(values);
     try {
-      let response = await fetch("http://192.168.90.88:8080/auth/login", {
+      let response = await fetch("http://192.168.90.88:8080/api/auth/login", {
         method: "POST",
         body: JSON.stringify(values),
         headers: { "Content-Type": "application/json" },
@@ -39,7 +39,6 @@ function LoginScreen({ navigation }) {
       let data = await response.json();
       if (!data.success) {
         setError(data.message);
-        console.log(data.message);
       } else {
         setIsLoggedIn(true);
       }

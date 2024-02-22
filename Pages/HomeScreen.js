@@ -4,7 +4,7 @@ import ModuleCard from "../components/ModuleCard";
 
 const HomeScreen = () => {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <ModuleCard title={"Reading"} icon={"book"} lectures={9} tests={2} />
       <ModuleCard
         title={"Listening"}

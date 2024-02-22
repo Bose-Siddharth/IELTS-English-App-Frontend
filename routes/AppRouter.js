@@ -4,17 +4,12 @@ import {
   DrawerContentScrollView,
   DrawerItem,
 } from "@react-navigation/drawer";
-import { NavigationContainer } from "@react-navigation/native";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  StatusBar,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useLogin } from "../context/LoginProvider";
 import HomeScreen from "../Pages/HomeScreen";
+import ProgressScreen from "../Pages/ProgressScreen";
+import Layout from "../Pages/Layout";
 
 // Custom drawer content component
 function CustomDrawerContent({ navigation }) {
@@ -25,14 +20,14 @@ function CustomDrawerContent({ navigation }) {
         <DrawerItem
           label="Home"
           onPress={() => navigation.navigate("Home")}
-          icon={({ focused, color, size }) => (
+          icon={({ color, size }) => (
             <Icon name="home" size={size} color={color} />
           )}
         />
         <DrawerItem
-          label="Profile"
-          onPress={() => navigation.navigate("Profile")}
-          icon={({ focused, color, size }) => (
+          label="Progress"
+          onPress={() => navigation.navigate("Progress")}
+          icon={({ color, size }) => (
             <Icon name="user" size={size} color={color} />
           )}
         />
@@ -41,7 +36,6 @@ function CustomDrawerContent({ navigation }) {
       <TouchableOpacity
         style={styles.logoutButton}
         onPress={() => {
-          /* handle logout */
           setIsLoggedIn(false);
         }}
       >
@@ -54,18 +48,18 @@ function CustomDrawerContent({ navigation }) {
 
 const Drawer = createDrawerNavigator();
 
-const CustomDrawerHeader = ({ navigation }) => {
-  return (
-    <TouchableOpacity style={styles.menuButton}>
-      <Icon
-        name="bars"
-        size={24}
-        color="#000000"
-        onPress={() => navigation.toggleDrawer()}
-      />
-    </TouchableOpacity>
-  );
-};
+// const CustomDrawerHeader = ({ navigation }) => {
+//   return (
+//     <TouchableOpacity style={styles.menuButton}>
+//       <Icon
+//         name="bars"
+//         size={24}
+//         color="#000000"
+//         onPress={() => navigation.toggleDrawer()}
+//       />
+//     </TouchableOpacity>
+//   );
+// };
 
 export default function AppRouter() {
   return (
@@ -75,9 +69,22 @@ export default function AppRouter() {
         // header: (props) => <CustomDrawerHeader {...props} />,
         headerShown: false,
       }}
+      initialRouteName="Home"
     >
-      <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Profile" component={HomeScreen} />
+      <Drawer.Screen name="Home">
+        {() => (
+          <Layout>
+            <HomeScreen />
+          </Layout>
+        )}
+      </Drawer.Screen>
+      <Drawer.Screen name="Progress">
+        {() => (
+          <Layout>
+            <ProgressScreen />
+          </Layout>
+        )}
+      </Drawer.Screen>
       {/* Add more screens as needed */}
     </Drawer.Navigator>
   );

@@ -36,7 +36,7 @@ function SignupScreen({ navigation }) {
   async function handleSubmit(values) {
     console.log(values);
     try {
-      let response = await fetch("http://192.168.90.88:8080/auth/signup", {
+      let response = await fetch("http://192.168.90.88:8080/api/auth/signup", {
         method: "POST",
         body: JSON.stringify(values),
         headers: { "Content-Type": "application/json" },

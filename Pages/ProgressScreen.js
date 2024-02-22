@@ -8,10 +8,7 @@ const ProgressScreen = () => {
       style={{
         flex: 1,
         padding: 40,
-        marginTop:
-          Platform.OS === "android"
-            ? StatusBar.currentHeight
-            : StatusBar.currentHeight + 40,
+        marginTop: 10,
       }}
     >
       <View style={styles.box}>
