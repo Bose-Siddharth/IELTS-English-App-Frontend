@@ -40,11 +40,17 @@ const ProgressScreen = () => {
             right: "2.5%",
             borderRadius: 50,
             borderColor: "#c0088c",
-            overflow: Platform.OS === "ios" ? "hidden" : null,
+            elevation: 4,
+            shadowColor: "#000",
+            shadowOffset: { width: 3, height: 4 },
+            shadowOpacity: 1,
+            shadowRadius: 3,
+            borderRadius: 50,
+            // overflow: Platform.OS === "ios" ? "hidden" : null,
             backgroundColor: "blue",
           }}
         >
-          <Icon name="flag" size={30} color="red" />
+          <Icon name="book" size={30} color="white" />
         </View>
       </View>
       <View style={styles.box}>
@@ -58,6 +64,26 @@ const ProgressScreen = () => {
             },
           ]}
         ></View> */}
+        <View
+          style={{
+            padding: 16,
+            position: "absolute",
+            top: "-10%",
+            left: "-7.5%",
+            elevation: 4,
+            shadowColor: "#000",
+            shadowOffset: { width: 3, height: 4 },
+            shadowOpacity: 1,
+            shadowRadius: 3,
+            borderRadius: 50,
+            borderColor: "#c0088c",
+            // overflow: Platform.OS === "ios" ? "hidden" : null,
+            backgroundColor: "blue",
+            zIndex: 999,
+          }}
+        >
+          <Icon name="hard-of-hearing" size={30} color="white" />
+        </View>
         <View
           style={[
             styles.dot,
@@ -91,6 +117,26 @@ const ProgressScreen = () => {
       </View>
       <View style={styles.box}>
         <View
+          style={{
+            padding: 20,
+            position: "absolute",
+            top: "-22%",
+            right: "-7.5%",
+            elevation: 4,
+            shadowColor: "#000",
+            shadowOffset: { width: 3, height: 4 },
+            shadowOpacity: 1,
+            shadowRadius: 3,
+            borderRadius: 40,
+            borderColor: "#c0088c",
+            // overflow: Platform.OS === "ios" ? "hidden" : null,
+            backgroundColor: "blue",
+            zIndex: 999,
+          }}
+        >
+          <Icon name="microphone" size={30} color="white" />
+        </View>
+        <View
           style={[
             styles.dot,
             {
@@ -99,7 +145,29 @@ const ProgressScreen = () => {
             },
           ]}
         ></View>
-        <View style={styles.diagonal4}></View>
+        <View style={styles.diagonal4}>
+          <View
+            style={{
+              padding: 16,
+              position: "absolute",
+              bottom: "-22%",
+              left: "-22%",
+              borderRadius: 50,
+              borderColor: "#c0088c",
+              // overflow: Platform.OS === "ios" ? "hidden" : null,
+              elevation: 4,
+              shadowColor: "#000",
+              shadowOffset: { width: 3, height: 4 },
+              shadowOpacity: 1,
+              shadowRadius: 3,
+              borderRadius: 50,
+              backgroundColor: "blue",
+              zIndex: 999,
+            }}
+          >
+            <Icon name="pencil-square-o" size={30} color="white" />
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -115,8 +183,8 @@ const styles = StyleSheet.create({
   },
   diagonal: {
     flex: 1,
-    borderTopWidth: 10,
-    borderLeftWidth: 10,
+    borderTopWidth: 8,
+    borderLeftWidth: 5,
     borderColor: "#2743b8",
     borderTopRightColor: "#000",
     borderTopLeftRadius: 200,

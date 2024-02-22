@@ -3,22 +3,44 @@ import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import InsetShadow from "react-native-inset-shadow";
 
-const ModuleCard = ({ title, lectures, tests, icon }) => {
+const ModuleCard = ({ title, icon, locked }) => {
   return (
     <View style={styles.cardContainer}>
-      <InsetShadow containerStyle={styles.container}>
+      <InsetShadow
+        containerStyle={[
+          styles.container,
+          locked && { backgroundColor: "rgba(174, 179, 209, 0.1)" },
+        ]}
+      >
         <View style={styles.moduleContainer}>
-          <View style={styles.moduleIcon}>
+          <View style={[styles.moduleIcon, locked && { opacity: 0.5 }]}>
             <Icon name={icon} size={36} color={"blue"} />
           </View>
-          <Text style={styles.moduleText}>{title}</Text>
+          <Text style={[styles.moduleText, locked && { color: "gray" }]}>
+            {title}
+          </Text>
+          {locked && (
+            <View
+              style={{
+                borderWidth: 3,
+                borderColor: "#fff",
+                flex: 1,
+                padding: 5,
+                alignItems: "center",
+                backgroundColor: "rgba(245, 245, 245, 0.8)",
+                borderRadius: 10,
+              }}
+            >
+              <Icon name="lock" size={24} color={"#d21404"} />
+            </View>
+          )}
         </View>
         <View style={styles.hr}></View>
         <View style={styles.ctaContainer}>
-          <Pressable style={styles.cta}>
+          <Pressable style={[styles.cta, locked && { opacity: 0.5 }]}>
             <Text style={styles.ctaText}>Read Instructions</Text>
           </Pressable>
-          <Pressable style={styles.cta}>
+          <Pressable style={[styles.cta, locked && { opacity: 0.5 }]}>
             <Text style={styles.ctaText}>Start Test</Text>
           </Pressable>
         </View>
@@ -41,7 +63,7 @@ const styles = StyleSheet.create({
     marginHorizontal: "8%",
   },
   container: {
-    backgroundColor: "rgba(207,212,238, 0.5)",
+    backgroundColor: "rgba(207,212,238, 0.3)",
     flex: 1,
     borderRadius: 8,
     margin: "2%",
