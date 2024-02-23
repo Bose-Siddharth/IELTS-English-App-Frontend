@@ -4,7 +4,7 @@ import {
   DrawerContentScrollView,
   DrawerItem,
 } from "@react-navigation/drawer";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useLogin } from "../context/LoginProvider";
 import HomeScreen from "../Pages/HomeScreen";
@@ -15,21 +15,26 @@ import Layout from "../Pages/Layout";
 function CustomDrawerContent({ navigation }) {
   const { setIsLoggedIn } = useLogin();
   return (
+  
+   
     <View style={styles.drawerContent}>
       <DrawerContentScrollView>
-        <DrawerItem
+        <DrawerItem style={styles.items}
           label="Home"
           onPress={() => navigation.navigate("Home")}
           icon={({ color, size }) => (
-            <Icon name="home" size={size} color={color} />
+            <Icon name="home" size={size} color='black' />
+
           )}
+         labelStyle={{fontSize:20,fontWeight:'bold',color:'black'}}
         />
         <DrawerItem
           label="Progress"
           onPress={() => navigation.navigate("Progress")}
           icon={({ color, size }) => (
-            <Icon name="user" size={size} color={color} />
+            <Icon name="user" size={size} color='black' />
           )}
+          labelStyle={{fontSize:20,fontWeight:'bold',color:'black'}}
         />
         {/* Add more drawer items as needed */}
       </DrawerContentScrollView>
@@ -43,6 +48,7 @@ function CustomDrawerContent({ navigation }) {
         <Text style={styles.logoutButtonText}>Logout</Text>
       </TouchableOpacity>
     </View>
+   
   );
 }
 
@@ -99,25 +105,33 @@ const styles = StyleSheet.create({
   },
   drawerContent: {
     flex: 1,
+    backgroundColor:'#e7eafa'
+    
     // paddingTop: StatusBar.currentHeight,
   },
   logoutButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "red",
-    borderRadius: 5,
+    backgroundColor: "#BB3F3F",
+    borderRadius: 8,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginHorizontal: 20,
     marginBottom: 20,
+    height:50,
+    justifyContent:'center'
   },
   logoutButtonText: {
     marginLeft: 10,
     color: "#ffffff",
+    fontSize:18
   },
   menuButton: {
     paddingLeft: 20,
     backgroundColor: "#ffffff",
     // marginTop: StatusBar.currentHeight,
   },
+  items:{
+    marginTop:"20%"
+  }
 });
