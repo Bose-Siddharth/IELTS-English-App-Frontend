@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  Platform,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useLogin } from "../context/LoginProvider";
@@ -34,9 +35,13 @@ function Layout({ children, title }) {
           </TouchableOpacity>
           {/* <View>{children}</View> */}
           <View
-            style={{ flex: 1, alignItems: "center", jutifyContent: "center" }}
+            style={{
+              flex: 1,
+              alignItems: "center",
+              jutifyContent: "center",
+            }}
           >
-            <Text>{title}</Text>
+            <Text style={{ fontSize: 20, fontWeight: "bold" }}>{title}</Text>
           </View>
           <TouchableOpacity style={styles.menuButton}>
             <Icon
@@ -65,12 +70,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     // paddingHorizontal: "2%",
     marginTop: StatusBar.currentHeight,
+    // marginTop: Platform.OS === "ios" && StatusBar.currentHeight,
     paddingBottom: "5%",
   },
   header: {
     flexDirection: "row",
     height: "max-content",
     justifyContent: "space-between",
+    alignItems: "center",
     // borderWidth: 1,
     // borderColor: "red",
   },

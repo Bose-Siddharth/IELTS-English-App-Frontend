@@ -18,6 +18,7 @@
     "expo-screen-orientation": "~6.4.1",
     "expo-status-bar": "~1.11.1",
     "formik": "^2.4.5",
+    "nanoid": "^5.0.6",
     "react": "18.2.0",
     "react-native": "0.73.2",
     "react-native-gesture-handler": "~2.14.0",
