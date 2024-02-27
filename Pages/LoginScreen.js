@@ -23,26 +23,24 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required("Password is required"),
 });
 
-const { width, height } = Dimensions.get("window");
-
-function LoginScreen({ navigation }) {
+function LoginScreen({}) {
   const { setIsLoggedIn, isLoggedIn } = useLogin();
   const [error, setError] = useState("");
   const { postRequest } = useHttp();
 
-  async function submitHandler(values) {
+  const submitHandler = async (values) => {
     try {
       const response = await postRequest("/auth/login", values);
       console.log("API response:", response);
       if (!response.success) {
-        setError(response.message || "There was an error logging in");
+        setError(response.message || "There was an error signing in");
       } else {
         setIsLoggedIn(true);
       }
     } catch (error) {
       console.error("API error:", error.message);
     }
-  }
+  };
 
   function forgotPassHandler() {
     Alert.alert("Pass Change");

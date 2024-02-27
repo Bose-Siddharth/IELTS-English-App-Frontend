@@ -25,7 +25,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "domain": "http://192.168.90.88:3000/api"
+      "domain": "https://ielts-iema.iemamerica.com/api"
     }
   }
 }

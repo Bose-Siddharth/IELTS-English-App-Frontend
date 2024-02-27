@@ -39,7 +39,7 @@ function SignupScreen({ navigation }) {
   async function handleSubmit(values) {
     try {
       const response = await postRequest("/auth/signup", values);
-      console.log("API response:", response);
+      // console.log("API response:", response);
       if (!response.success) {
         setError(response.message || "There was an error signing in");
       } else {

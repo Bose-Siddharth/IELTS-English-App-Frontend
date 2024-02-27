@@ -27,16 +27,16 @@ const useHttp = () => {
       headers,
       body: JSON.stringify(body),
     };
-
+    // console.log(apiUrl, config);
     try {
       const response = await fetch(apiUrl, config);
-      console.log("Response:", response.ok); // Add this line to log the response
       //   if (!response.ok) {
       //     throw new Error("Network response was not ok");
       //   }
       const data = await response.json();
       console.log(data);
       setLoading(false);
+      console.log("Response:", data); // Add this line to log the response
       return data;
     } catch (err) {
       setError(err.message);
