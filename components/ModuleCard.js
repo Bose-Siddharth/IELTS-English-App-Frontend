@@ -3,8 +3,10 @@ import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import InsetShadow from "react-native-inset-shadow";
 import Instructions from "../Pages/Instructions";
+import { useNavigation } from "@react-navigation/native";
 
 const ModuleCard = ({ title, icon, locked, modalVisible, setModalVisible }) => {
+  const navigation = useNavigation();
   return (
     <>
       {modalVisible ? (
@@ -57,7 +59,13 @@ const ModuleCard = ({ title, icon, locked, modalVisible, setModalVisible }) => {
               >
                 <Text style={styles.ctaText}>Read Instructions</Text>
               </Pressable>
-              <Pressable style={[styles.cta, locked && { opacity: 0.5 }]}>
+              <Pressable
+                style={[styles.cta, locked && { opacity: 0.5 }]}
+                onPress={() => {
+                  
+                  navigation.navigate("Test");
+                }}
+              >
                 <Text style={styles.ctaText}>Start Test</Text>
               </Pressable>
             </View>

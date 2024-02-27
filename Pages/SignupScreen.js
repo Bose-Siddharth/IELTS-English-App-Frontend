@@ -13,6 +13,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useLogin } from "../context/LoginProvider";
 import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import useHttp from "../hooks/useHttp";
 
@@ -43,6 +44,23 @@ function SignupScreen({ navigation }) {
       if (!response.success) {
         setError(response.message || "There was an error signing in");
       } else {
+        await AsyncStorage.setItem("token", response.token);
+        setIsLoggedIn(true);
+      }
+    } catch (error) {
+      console.error("API error:", error.message);
+    }
+  }
+  async function handleSubmit(values) {
+    try {
+      const { token } = await postRequest("/auth/signup", values);
+      console.log("API response:", token);
+      // const token = response.token;
+      if (!response.success) {
+        setError(response.message || "There was an error signing in");
+      } else {
+        await AsyncStorage.setItem("token", token);
+        console.log("Token", AsyncStorage.getItem("token"));
         setIsLoggedIn(true);
       }
     } catch (error) {

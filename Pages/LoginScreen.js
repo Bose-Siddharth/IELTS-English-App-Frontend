@@ -16,6 +16,7 @@ import { useLogin } from "../context/LoginProvider";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Svg, { Image } from "react-native-svg";
 import useHttp from "../hooks/useHttp";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { usePost } from "../hooks/useHttp";
 
 const validationSchema = Yup.object().shape({
@@ -28,19 +29,20 @@ function LoginScreen({}) {
   const [error, setError] = useState("");
   const { postRequest } = useHttp();
 
-  const submitHandler = async (values) => {
+  async function submitHandler(values) {
     try {
       const response = await postRequest("/auth/login", values);
-      console.log("API response:", response);
+      // console.log("API response:", response);
       if (!response.success) {
         setError(response.message || "There was an error signing in");
       } else {
+        await AsyncStorage.setItem("token", response.token);
         setIsLoggedIn(true);
       }
     } catch (error) {
       console.error("API error:", error.message);
     }
-  };
+  }
 
   function forgotPassHandler() {
     Alert.alert("Pass Change");

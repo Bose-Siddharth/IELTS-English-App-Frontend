@@ -6,12 +6,28 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { level1Data } from "../constants/mod1level1";
-import StopClock from "../components/StopClock";
+import useHttp from "../hooks/useHttp";
+// import StopClock from "../components/StopClock";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // const TestScreen = ({ module, level }) => {
-const TestScreen = () => {
+const TestScreen = ({ module, level }) => {
+  const { getRequest } = useHttp();
+
+  const getQuestions = async () => {
+    const token = await AsyncStorage.getItem("token");
+    const response = await getRequest(
+      `/exam/${module}/${level}/questions`,
+      token
+    );
+    console.log(response);
+    // console.log("API RESPONSE:", response);
+  };
+  useEffect(() => {
+    getQuestions();
+  }, []);
   const data = level1Data.questions.questions;
   const [currentQuestion, setCurrentQuestion] = useState(1);
   console.log(data[currentQuestion].options[0].value);
@@ -51,9 +67,7 @@ const TestScreen = () => {
           <View style={styles.heading}>
             <Text style={styles.headingText}>Questions</Text>
           </View>
-          <View style={styles.timer}>
-            <StopClock />
-          </View>
+          <View style={styles.timer}>{/* <StopClock /> */}</View>
         </View>
         <View style={styles.questionsList}>
           <FlatList

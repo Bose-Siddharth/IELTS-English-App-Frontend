@@ -102,7 +102,7 @@ export default function AppRouter() {
         // header: (props) => <CustomDrawerHeader {...props} />,
         headerShown: false,
       }}
-      initialRouteName="Test"
+      initialRouteName="Home"
     >
       <Drawer.Screen name="Home">
         {() => (

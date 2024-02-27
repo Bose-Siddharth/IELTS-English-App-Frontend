@@ -7,6 +7,32 @@ const useHttp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const getRequest = async (endPoint, token = null) => {
+    setLoading(true);
+    setError(null);
+
+    const apiUrl = `${domain}${endPoint}`;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    // console.log(apiUrl, config);
+    try {
+      const response = await fetch(apiUrl, config);
+
+      const data = await response.json();
+      console.log(data);
+      setLoading(false);
+      console.log("Response:", data); // Add this line to log the response
+      return data;
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
   const postRequest = async (endPoint, body, token = null) => {
     setLoading(true);
     setError(null);
@@ -27,16 +53,12 @@ const useHttp = () => {
       headers,
       body: JSON.stringify(body),
     };
-    // console.log(apiUrl, config);
+
     try {
       const response = await fetch(apiUrl, config);
-      //   if (!response.ok) {
-      //     throw new Error("Network response was not ok");
-      //   }
+
       const data = await response.json();
-      console.log(data);
       setLoading(false);
-      console.log("Response:", data); // Add this line to log the response
       return data;
     } catch (err) {
       setError(err.message);
@@ -77,7 +99,7 @@ const useHttp = () => {
     }
   };
 
-  return { loading, error, postRequest, deleteRequest };
+  return { loading, error, postRequest, deleteRequest, getRequest };
 };
 
 export default useHttp;
