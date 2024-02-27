@@ -30,7 +30,7 @@ function LoginScreen({ navigation }) {
     // Your login logic here
     console.log(values);
     try {
-      let response = await fetch("http://192.168.90.88:8080/api/auth/login", {
+      let response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         body: JSON.stringify(values),
         headers: { "Content-Type": "application/json" },
