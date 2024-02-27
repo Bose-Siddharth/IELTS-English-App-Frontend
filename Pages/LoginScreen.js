@@ -15,6 +15,8 @@ import {
 import { useLogin } from "../context/LoginProvider";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Svg, { Image } from "react-native-svg";
+import useHttp from "../hooks/useHttp";
+// import { usePost } from "../hooks/useHttp";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -26,24 +28,19 @@ const { width, height } = Dimensions.get("window");
 function LoginScreen({ navigation }) {
   const { setIsLoggedIn, isLoggedIn } = useLogin();
   const [error, setError] = useState("");
-  async function submitHandler(values) {
-    // Your login logic here
-    console.log(values);
-    try {
-      let response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        body: JSON.stringify(values),
-        headers: { "Content-Type": "application/json" },
-      });
+  const { postRequest } = useHttp();
 
-      let data = await response.json();
-      if (!data.success) {
-        setError(data.message);
+  async function submitHandler(values) {
+    try {
+      const response = await postRequest("/auth/login", values);
+      console.log("API response:", response);
+      if (!response.success) {
+        setError(response.message || "There was an error logging in");
       } else {
         setIsLoggedIn(true);
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("API error:", error.message);
     }
   }
 

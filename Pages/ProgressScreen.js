@@ -52,6 +52,27 @@ const ProgressScreen = () => {
         >
           <Icon name="book" size={30} color="white" />
         </View>
+        <View
+          style={{
+            padding: 16,
+            position: "absolute",
+            borderRadius: 50,
+            borderColor: "blue",
+            borderWidth: 3,
+            elevation: 4,
+            top: "-40%",
+            left: "70%",
+            shadowColor: "#000",
+            shadowOffset: { width: 3, height: 4 },
+            shadowOpacity: 1,
+            shadowRadius: 3,
+            borderRadius: 50,
+            zIndex: 1000,
+            backgroundColor: "#cf9a64",
+          }}
+        >
+          <Icon name="user" size={15} color="white" />
+        </View>
       </View>
       <View style={styles.box}>
         <View style={styles.diagonal2}></View>

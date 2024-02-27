@@ -14,9 +14,12 @@ import * as yup from "yup";
 import { useLogin } from "../context/LoginProvider";
 import { useState } from "react";
 
+import useHttp from "../hooks/useHttp";
+
 function SignupScreen({ navigation }) {
   const { setIsLoggedIn } = useLogin();
   const [error, setError] = useState("");
+  const { postRequest } = useHttp();
   const validationSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
     email: yup
@@ -34,26 +37,17 @@ function SignupScreen({ navigation }) {
     department: yup.string().required("Department is required"),
   });
   async function handleSubmit(values) {
-    console.log(values);
     try {
-      let response = await fetch("http://localhost:3000/api/auth/signup", {
-        method: "POST",
-        body: JSON.stringify(values),
-        headers: { "Content-Type": "application/json" },
-      });
-
-      let data = await response.json();
-      if (!data.success) {
-        setError(data.message);
-        console.log(error);
+      const response = await postRequest("/auth/signup", values);
+      console.log("API response:", response);
+      if (!response.success) {
+        setError(response.message || "There was an error signing in");
       } else {
         setIsLoggedIn(true);
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("API error:", error.message);
     }
-    // setIsLoggedIn(true);
-    // navigation.navigate("HomeScreen");
   }
   return (
     <Formik
@@ -181,7 +175,7 @@ function SignupScreen({ navigation }) {
 
                 <Pressable style={styles.registerBtn} onPress={handleSubmit}>
                   <Text style={[styles.textWhite, styles.submitText]}>
-                    Register Staff
+                    Register
                   </Text>
                 </Pressable>
               </View>
