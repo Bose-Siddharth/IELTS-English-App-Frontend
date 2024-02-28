@@ -17,6 +17,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import Svg, { Image } from "react-native-svg";
 import useHttp from "../hooks/useHttp";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GlobalStyles } from "../colorPalette/color";
 // import { usePost } from "../hooks/useHttp";
 
 const validationSchema = Yup.object().shape({
@@ -170,7 +171,7 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: GlobalStyles.colors.bgColor,
     resizeMode: "cover",
   },
   headingContainer: {
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
     gap: 30,
   },
   headerText: {
-    color: "#1F41BB",
+    color: GlobalStyles.colors.primary100,
     fontWeight: "700",
     fontSize: 24,
     textTransform: "uppercase",
@@ -212,25 +213,20 @@ const styles = StyleSheet.create({
     padding: 16,
     width: "80%",
     borderRadius: 8,
-    backgroundColor: "#e0e6f6",
+    backgroundColor: GlobalStyles.colors.primary50,
     borderWidth: 2,
-    borderColor: "#1F41BB",
+    borderColor:GlobalStyles.colors.primary100,
   },
-  picker: {
-    padding: 0,
-    color: "gray",
-    borderRadius: 8,
-    backgroundColor: "#e0e6f6",
-  },
+ 
   registerBtn: {
     borderRadius: 10,
     width: Dimensions.get("window").width * 0.75,
-    backgroundColor: "blue",
+    backgroundColor: GlobalStyles.colors.primary100,
     paddingHorizontal: "8%",
     paddingVertical: "5%",
   },
   textWhite: {
-    color: "white",
+    color: GlobalStyles.colors.buttonTextPrimary100,
   },
   submitText: {
     fontWeight: "bold",
@@ -240,20 +236,20 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   textBlue: {
-    color: "blue",
+    color: GlobalStyles.colors.primary100,
   },
   textGray: {
-    color: "gray",
+    color: GlobalStyles.colors.subheading50,
   },
   forgotPassBtn: {
     fontStyle: "italic",
   },
   errorText: {
-    color: "red",
+    color: GlobalStyles.colors.warning,
     // marginTop: 5,
   },
   icon: {
-    backgroundColor: "#ccc",
+    backgroundColor: GlobalStyles.colors.subheading20,
     padding: "3%",
     width: 60,
     borderRadius: 8,
