@@ -14,7 +14,7 @@ import * as yup from "yup";
 import { useLogin } from "../context/LoginProvider";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { GlobalStyles } from "../colorPalette/colors";
+
 import useHttp from "../hooks/useHttp";
 
 function SignupScreen({ navigation }) {
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     paddingTop: "10%",
   },
   headerText: {
-    color:  GlobalStyles.colors.primary100,
+    color: "#1F41BB",
     fontWeight: "bold",
     fontSize: 24,
     textTransform: "uppercase",
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: GlobalStyles.colors.primary50,
     borderWidth: 2,
-    borderColor:GlobalStyles.colors.primary100,
+    borderColor: "#1F41BB",
   },
   picker: {
     padding: 0,
@@ -274,14 +274,14 @@ const styles = StyleSheet.create({
     marginBottom: Keyboard.isVisible ? null : "20%",
   },
   textWhite: {
-    color: GlobalStyles.colors.buttonTextPrimary100,
+    color: "white",
   },
   submitText: {
     fontWeight: "bold",
     textTransform: "uppercase",
   },
   errorText: {
-    color:GlobalStyles.colors.warning,
+    color: "red",
     // marginTop: 5,
   },
 });

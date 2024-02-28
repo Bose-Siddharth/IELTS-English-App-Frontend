@@ -17,6 +17,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import Svg, { Image } from "react-native-svg";
 import useHttp from "../hooks/useHttp";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GlobalStyles } from "../colorPalette/color";
 // import { usePost } from "../hooks/useHttp";
 import { GlobalStyles } from "../colorPalette/colors";
 const validationSchema = Yup.object().shape({
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
     gap: 30,
   },
   headerText: {
-    color:GlobalStyles.colors.primary100,
+    color: "#1F41BB",
     fontWeight: "700",
     fontSize: 24,
     textTransform: "uppercase",
@@ -229,7 +230,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: GlobalStyles.colors.primary50,
     borderWidth: 2,
-    borderColor: GlobalStyles.colors.primary100,
+    borderColor: "#1F41BB",
   },
   picker: {
     padding: 0,
@@ -237,6 +238,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: "#e0e6f6",
   },
+ 
   registerBtn: {
     borderRadius: 10,
     width: Dimensions.get("window").width * 0.75,
@@ -245,7 +247,7 @@ const styles = StyleSheet.create({
     paddingVertical: "5%",
   },
   textWhite: {
-    color:  GlobalStyles.colors.buttonTextPrimary100,
+    color: "white",
   },
   submitText: {
     fontWeight: "bold",
@@ -255,7 +257,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   textBlue: {
-    color:GlobalStyles.colors.primary100,
+    color: "blue",
   },
   textGray: {
     color: GlobalStyles.colors.subheading50,
