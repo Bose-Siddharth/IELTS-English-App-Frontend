@@ -14,7 +14,7 @@ import * as yup from "yup";
 import { useLogin } from "../context/LoginProvider";
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { GlobalStyles } from "../colorPalette/colors";
 import useHttp from "../hooks/useHttp";
 
 function SignupScreen({ navigation }) {
@@ -219,7 +219,7 @@ export default SignupScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: GlobalStyles.colors.bgColor,
   },
   headingContainer: {
     height: "10%",
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     paddingTop: "10%",
   },
   headerText: {
-    color: "#1F41BB",
+    color:  GlobalStyles.colors.primary100,
     fontWeight: "bold",
     fontSize: 24,
     textTransform: "uppercase",
@@ -255,33 +255,33 @@ const styles = StyleSheet.create({
     padding: 16,
     width: "80%",
     borderRadius: 8,
-    backgroundColor: "#e0e6f6",
+    backgroundColor: GlobalStyles.colors.primary50,
     borderWidth: 2,
-    borderColor: "#1F41BB",
+    borderColor:GlobalStyles.colors.primary100,
   },
   picker: {
     padding: 0,
-    color: "gray",
+    color: GlobalStyles.colors.subheading50,
     borderRadius: 8,
-    backgroundColor: "#e0e6f6",
+    backgroundColor: GlobalStyles.colors.primary50,
   },
   registerBtn: {
     borderRadius: 10,
-    backgroundColor: "blue",
+    backgroundColor: GlobalStyles.colors.primary100,
     paddingHorizontal: "8%",
     paddingVertical: "5%",
     marginTop: Keyboard.isVisible ? null : "auto",
     marginBottom: Keyboard.isVisible ? null : "20%",
   },
   textWhite: {
-    color: "white",
+    color: GlobalStyles.colors.buttonTextPrimary100,
   },
   submitText: {
     fontWeight: "bold",
     textTransform: "uppercase",
   },
   errorText: {
-    color: "red",
+    color:GlobalStyles.colors.warning,
     // marginTop: 5,
   },
 });

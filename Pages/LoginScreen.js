@@ -18,7 +18,7 @@ import Svg, { Image } from "react-native-svg";
 import useHttp from "../hooks/useHttp";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { usePost } from "../hooks/useHttp";
-
+import { GlobalStyles } from "../colorPalette/colors";
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string().required("Password is required"),
@@ -185,7 +185,7 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: GlobalStyles.colors.bgColor,
     resizeMode: "cover",
   },
   headingContainer: {
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     gap: 30,
   },
   headerText: {
-    color: "#1F41BB",
+    color:GlobalStyles.colors.primary100,
     fontWeight: "700",
     fontSize: 24,
     textTransform: "uppercase",
@@ -227,9 +227,9 @@ const styles = StyleSheet.create({
     padding: 16,
     width: "80%",
     borderRadius: 8,
-    backgroundColor: "#e0e6f6",
+    backgroundColor: GlobalStyles.colors.primary50,
     borderWidth: 2,
-    borderColor: "#1F41BB",
+    borderColor: GlobalStyles.colors.primary100,
   },
   picker: {
     padding: 0,
@@ -240,12 +240,12 @@ const styles = StyleSheet.create({
   registerBtn: {
     borderRadius: 10,
     width: Dimensions.get("window").width * 0.75,
-    backgroundColor: "blue",
+    backgroundColor: GlobalStyles.colors.primary100,
     paddingHorizontal: "8%",
     paddingVertical: "5%",
   },
   textWhite: {
-    color: "white",
+    color:  GlobalStyles.colors.buttonTextPrimary100,
   },
   submitText: {
     fontWeight: "bold",
@@ -255,20 +255,20 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   textBlue: {
-    color: "blue",
+    color:GlobalStyles.colors.primary100,
   },
   textGray: {
-    color: "gray",
+    color: GlobalStyles.colors.subheading50,
   },
   forgotPassBtn: {
     fontStyle: "italic",
   },
   errorText: {
-    color: "red",
+    color: GlobalStyles.colors.warning,
     // marginTop: 5,
   },
   icon: {
-    backgroundColor: "#ccc",
+    backgroundColor: GlobalStyles.colors.subheading20,
     padding: "3%",
     width: 60,
     borderRadius: 8,
