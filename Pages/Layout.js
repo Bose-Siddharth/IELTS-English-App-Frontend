@@ -7,6 +7,7 @@ import {
   View,
   ImageBackground,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useLogin } from "../context/LoginProvider";
@@ -14,6 +15,7 @@ import { useLogin } from "../context/LoginProvider";
 function Layout({ children, title }) {
   const navigation = useNavigation();
   const { setIsLoggedIn } = useLogin();
+
   return (
     <View style={styles.screen}>
       <ImageBackground
@@ -54,9 +56,7 @@ function Layout({ children, title }) {
             />
           </TouchableOpacity>
         </View>
-        <View style={{ flex: 1 }} navigation={navigation}>
-          {children}
-        </View>
+        <View style={{ flex: 1 }}>{children}</View>
       </ImageBackground>
     </View>
   );

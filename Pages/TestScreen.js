@@ -11,16 +11,18 @@ import { level1Data } from "../constants/mod1level1";
 import useHttp from "../hooks/useHttp";
 // import StopClock from "../components/StopClock";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useLogin } from "../context/LoginProvider";
 
 // const TestScreen = ({ module, level }) => {
-const TestScreen = ({ module, level }) => {
+const TestScreen = ({ module = "module1", level = "level1" }) => {
   const { getRequest } = useHttp();
-
+  const { setIsLoggedIn } = useLogin();
   const getQuestions = async () => {
     const token = await AsyncStorage.getItem("token");
     const response = await getRequest(
       `/exam/${module}/${level}/questions`,
-      token
+      token,
+      setIsLoggedIn
     );
     console.log(response);
     // console.log("API RESPONSE:", response);

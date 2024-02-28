@@ -38,33 +38,42 @@ function SignupScreen({ navigation }) {
     department: yup.string().required("Department is required"),
   });
   async function handleSubmit(values) {
+    // try {
+    //   const response = await postRequest("/auth/signup", values);
+    //   if (!response?.success) {
+    //     setError(response?.message || "There was an error signing in");
+    //   } else {
+    //     const token = await AsyncStorage.getItem("token");
+    //     if (token) {
+    //       await AsyncStorage.clear();
+    //       await AsyncStorage.setItem("token", response.token);
+    //       setIsLoggedIn(true);
+    //     } else {
+    //       await AsyncStorage.setItem("token", response.token);
+    //       setIsLoggedIn(true);
+    //     }
+    //   }
+    // } catch (error) {
+    //   console.error("API error:", error.message);
+    // }
     try {
-      const response = await postRequest("/auth/signup", values);
-      // console.log("API response:", response);
-      if (!response.success) {
-        setError(response.message || "There was an error signing in");
-      } else {
+      const endpoint = "/auth/signup"; // Endpoint to send the request
+      const response = await postRequest(endpoint, values); // Call postRequest with the endpoint
+      console.log("Response:", response);
+      if (response.success) {
+        // If response.success is true, set token in AsyncStorage
         await AsyncStorage.setItem("token", response.token);
+
+        // Update state or do whatever you want with the response
         setIsLoggedIn(true);
-      }
-    } catch (error) {
-      console.error("API error:", error.message);
-    }
-  }
-  async function handleSubmit(values) {
-    try {
-      const { token } = await postRequest("/auth/signup", values);
-      console.log("API response:", token);
-      // const token = response.token;
-      if (!response.success) {
-        setError(response.message || "There was an error signing in");
       } else {
-        await AsyncStorage.setItem("token", token);
-        console.log("Token", AsyncStorage.getItem("token"));
-        setIsLoggedIn(true);
+        // Handle error if success key is not true
+        console.error("Signup failed:", response.error); // Assuming there's an error key in the response
+        // You can set an error state or show an error message to the user
       }
     } catch (error) {
-      console.error("API error:", error.message);
+      console.error("Error while signing up:", error.message);
+      // Handle other errors such as network errors
     }
   }
   return (

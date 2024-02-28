@@ -31,16 +31,31 @@ function LoginScreen({}) {
 
   async function submitHandler(values) {
     try {
-      const response = await postRequest("/auth/login", values);
-      // console.log("API response:", response);
-      if (!response.success) {
-        setError(response.message || "There was an error signing in");
-      } else {
-        await AsyncStorage.setItem("token", response.token);
+      const endpoint = "/auth/login"; // Endpoint to send the request
+      const response = await postRequest(endpoint, values); // Call postRequest with the endpoint
+      console.log("Response:", response);
+      if (response.success) {
+        // If response.success is true, set token in AsyncStorage
+        const oldToken = await AsyncStorage.getItem("token");
+        if (oldToken) {
+          await AsyncStorage.clear();
+          await AsyncStorage.setItem("token", response.token);
+          console.log(await AsyncStorage.getItem("token"));
+        } else {
+          await AsyncStorage.setItem("token", response.token);
+          // console.log(await AsyncStorage.getItem("token"));
+        }
+
+        // Update state or do whatever you want with the response
         setIsLoggedIn(true);
+      } else {
+        // Handle error if success key is not true
+        console.error("Signup failed:", response.error); // Assuming there's an error key in the response
+        // You can set an error state or show an error message to the user
       }
     } catch (error) {
-      console.error("API error:", error.message);
+      console.error("Error while signing up:", error.message);
+      // Handle other errors such as network errors
     }
   }
 

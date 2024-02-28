@@ -2,14 +2,18 @@ import React from "react";
 import AppRouter from "../routes/AppRouter";
 import AuthRouter from "../routes/AuthRouter";
 import { useLogin } from "../context/LoginProvider";
-import Layout from "../Pages/Layout";
+// import { QueryClient, QueryClientProvider } from "react-query";
 import { SafeAreaView } from "react-native";
+
+// const queryClient = new QueryClient();
 
 const MainNavigator = () => {
   const { isLoggedIn } = useLogin();
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {isLoggedIn ? <AppRouter /> : <AuthRouter />}
+      {/* <QueryClientProvider client={queryClient}> */}
+        {isLoggedIn ? <AppRouter /> : <AuthRouter />}
+      {/* </QueryClientProvider> */}
     </SafeAreaView>
   );
 };

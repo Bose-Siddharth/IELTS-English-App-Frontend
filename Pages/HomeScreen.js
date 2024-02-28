@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React, { useState } from "react";
 import ModuleCard from "../components/ModuleCard";
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const propsList = [
     {
@@ -37,7 +37,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       {propsList.map((props) => {
-        return <ModuleCard {...props} navigation={navigation} />;
+        return <ModuleCard {...props} key={props.title} />;
       })}
     </View>
   );

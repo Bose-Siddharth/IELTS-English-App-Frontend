@@ -17,10 +17,12 @@ const ModuleCard = ({ title, icon, locked, modalVisible, setModalVisible }) => {
       ) : (
         <View style={styles.cardContainer}>
           <InsetShadow
-            containerStyle={[
-              styles.container,
-              locked && { backgroundColor: "rgba(174, 179, 209, 0.1)" },
-            ]}
+            containerStyle={
+              // [
+              styles.container
+              // ,locked && { backgroundColor: "rgba(174, 179, 209, 0.1)" },
+              // ]
+            }
           >
             <View style={styles.moduleContainer}>
               <View style={[styles.moduleIcon, locked && { opacity: 0.5 }]}>
@@ -54,7 +56,9 @@ const ModuleCard = ({ title, icon, locked, modalVisible, setModalVisible }) => {
                     ? () => {
                         setModalVisible(true);
                       }
-                    : null
+                    : () => {
+                        setModalVisible(false);
+                      }
                 }
               >
                 <Text style={styles.ctaText}>Read Instructions</Text>
@@ -62,7 +66,6 @@ const ModuleCard = ({ title, icon, locked, modalVisible, setModalVisible }) => {
               <Pressable
                 style={[styles.cta, locked && { opacity: 0.5 }]}
                 onPress={() => {
-                  
                   navigation.navigate("Test");
                 }}
               >

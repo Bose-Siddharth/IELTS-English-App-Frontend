@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -20,6 +20,9 @@ import Layout from "../Pages/Layout";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import TestScreen from "../Pages/TestScreen";
 import PassageScreen from "../Pages/PassageScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import useHttp from "../hooks/useHttp";
+import { useQuery } from "react-query";
 
 // Custom drawer content component
 function CustomDrawerContent({ navigation }) {
@@ -29,8 +32,8 @@ function CustomDrawerContent({ navigation }) {
       <DrawerContentScrollView>
         <DrawerItem
           style={styles.items}
-          label="Account"
-          onPress={() => navigation.navigate("Account")}
+          label="Home"
+          onPress={() => navigation.navigate("Home")}
           icon={() => (
             <Icon name="gears" size={32} color="blue" style={{ flex: 1 / 4 }} />
           )}
@@ -52,8 +55,8 @@ function CustomDrawerContent({ navigation }) {
         />
         <DrawerItem
           style={styles.items}
-          label="Analytics"
-          onPress={() => navigation.navigate("Analysis")}
+          label="Passage"
+          onPress={() => navigation.navigate("Passage")}
           icon={() => (
             <Icon
               name="line-chart"
@@ -95,6 +98,25 @@ const Drawer = createDrawerNavigator();
 // };
 
 export default function AppRouter() {
+  // const [loading, setLoading] = useState(false);
+  // const { getRequest } = useHttp();
+  // const { setIsLoggedIn } = useLogin();
+  // checkIsAuthenticated = async () => {
+  //   setLoading(true);
+  //   const token = await AsyncStorage.getItem("token");
+  //   const response = await getRequest("/auth/test", token);
+  //   if (!response) {
+  //     await AsyncStorage.clear();
+  //     setIsLoggedIn(false);
+  //   }
+  //   return response?.success;
+  // };
+  // useEffect(() => {
+  //   const data = useQuery("checkIsAuthenticated", checkIsAuthenticated, {
+  //     refetchInterval: 65000,
+  //   });
+  //   fetchDataAndLogState();
+  // }, []);
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
