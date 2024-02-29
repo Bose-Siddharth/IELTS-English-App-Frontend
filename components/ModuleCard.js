@@ -4,8 +4,10 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import InsetShadow from "react-native-inset-shadow";
 import Instructions from "../Pages/Instructions";
 import { useNavigation } from "@react-navigation/native";
+import { useExam } from "../context/ExamProvider";
 
 const ModuleCard = ({ title, icon, locked, modalVisible, setModalVisible }) => {
+  const { setIsTestRunning } = useExam();
   const navigation = useNavigation();
   return (
     <>
@@ -66,7 +68,7 @@ const ModuleCard = ({ title, icon, locked, modalVisible, setModalVisible }) => {
               <Pressable
                 style={[styles.cta, locked && { opacity: 0.5 }]}
                 onPress={() => {
-                  navigation.navigate("Test");
+                  setIsTestRunning(true);
                 }}
               >
                 <Text style={styles.ctaText}>Start Test</Text>

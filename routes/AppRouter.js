@@ -20,9 +20,11 @@ import Layout from "../Pages/Layout";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import TestScreen from "../Pages/TestScreen";
 import PassageScreen from "../Pages/PassageScreen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import useHttp from "../hooks/useHttp";
-import { useQuery } from "react-query";
+import { useExam } from "../context/ExamProvider";
+
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
 
 // Custom drawer content component
 function CustomDrawerContent({ navigation }) {
@@ -97,26 +99,7 @@ const Drawer = createDrawerNavigator();
 //   );
 // };
 
-export default function AppRouter() {
-  // const [loading, setLoading] = useState(false);
-  // const { getRequest } = useHttp();
-  // const { setIsLoggedIn } = useLogin();
-  // checkIsAuthenticated = async () => {
-  //   setLoading(true);
-  //   const token = await AsyncStorage.getItem("token");
-  //   const response = await getRequest("/auth/test", token);
-  //   if (!response) {
-  //     await AsyncStorage.clear();
-  //     setIsLoggedIn(false);
-  //   }
-  //   return response?.success;
-  // };
-  // useEffect(() => {
-  //   const data = useQuery("checkIsAuthenticated", checkIsAuthenticated, {
-  //     refetchInterval: 65000,
-  //   });
-  //   fetchDataAndLogState();
-  // }, []);
+const DrawerRouter = () => {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -140,23 +123,42 @@ export default function AppRouter() {
           </Layout>
         )}
       </Drawer.Screen>
-      <Drawer.Screen name="Passage">
-        {() => (
-          <Layout title="Passage">
-            <PassageScreen />
-          </Layout>
-        )}
-      </Drawer.Screen>
-      <Drawer.Screen name="Test">
-        {() => (
-          <Layout>
-            <TestScreen />
-          </Layout>
-        )}
-      </Drawer.Screen>
       {/* Add more screens as needed */}
     </Drawer.Navigator>
   );
+};
+
+const StackRouter = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Passage" component={PassageScreen} />
+      <Stack.Screen name="Test" component={TestScreen} />
+    </Stack.Navigator>
+  );
+};
+
+export default function AppRouter() {
+  // const [loading, setLoading] = useState(false);
+  // const { getRequest } = useHttp();
+  // const { setIsLoggedIn } = useLogin();
+  // checkIsAuthenticated = async () => {
+  //   setLoading(true);
+  //   const token = await AsyncStorage.getItem("token");
+  //   const response = await getRequest("/auth/test", token);
+  //   if (!response) {
+  //     await AsyncStorage.clear();
+  //     setIsLoggedIn(false);
+  //   }
+  //   return response?.success;
+  // };
+  // useEffect(() => {
+  //   const data = useQuery("checkIsAuthenticated", checkIsAuthenticated, {
+  //     refetchInterval: 65000,
+  //   });
+  //   fetchDataAndLogState();
+  // }, []);
+  const { isTestRunning } = useExam();
+  return <>{isTestRunning ? <StackRouter /> : <DrawerRouter />}</>;
 }
 
 const styles = StyleSheet.create({

@@ -1,8 +1,10 @@
 import { View, Text, ScrollView, StyleSheet, Pressable } from "react-native";
 import React from "react";
 import { level1Data } from "../constants/mod1level1";
+import { useExam } from "../context/ExamProvider";
 
-const PassageScreen = () => {
+const PassageScreen = ({ navigation }) => {
+  const { isTestRunning, setIsTestRunning } = useExam();
   console.log(level1Data);
   return (
     <>
@@ -12,7 +14,14 @@ const PassageScreen = () => {
         </Text>
         <Text style={styles.passageText}>{level1Data.passage.passage}</Text>
       </ScrollView>
-      <Pressable style={styles.continueButton}>
+      <Pressable
+        style={styles.continueButton}
+        onPress={() => {
+          setIsTestRunning((prev) => {
+            prev = !prev;
+          });
+        }}
+      >
         <Text style={styles.continueText}>Proceed to Test</Text>
       </Pressable>
     </>
