@@ -70,7 +70,7 @@ function Layout1({ children }) {
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.timertxt}>Timer</Text>
+          <Text style={styles.timertxt}>Test Ends In:</Text>
         </View>
         <View style={{ flex: 1 }}>{children}</View>
       </ImageBackground>

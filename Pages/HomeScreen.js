@@ -26,7 +26,7 @@ const HomeScreen = () => {
     {
       title: "Speaking",
       icon: "microphone",
-      locked: true,
+      locked: false,
       modalVisible: modalVisible,
       setModalVisible: setModalVisible,
       module: 3,

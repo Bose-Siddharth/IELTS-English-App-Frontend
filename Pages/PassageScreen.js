@@ -1,18 +1,48 @@
 import { View, Text, ScrollView, StyleSheet, Pressable } from "react-native";
-import React from "react";
-import { level1Data } from "../constants/mod1level1";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import useHttp from "../hooks/useHttp";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useExam } from "../context/ExamProvider";
 
 const PassageScreen = () => {
   const navigation = useNavigation();
-  console.log(level1Data);
+  const { getRequest } = useHttp();
+  const [passage, setPassage] = useState();
+  // const token = await AsyncStorage.getItem("token");
+  const { module, level } = useExam();
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        const response = await getRequest(
+          `/exam/module${module}/level${level}/questions`,
+          token
+        );
+        console.log("====================================");
+        setPassage(response.passage);
+        // console.warn(passage);
+        console.log("====================================");
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
+    };
+
+    fetchQuestions();
+
+    // This effect runs before the component loads
+    return () => {
+      // Cleanup if needed
+    };
+  }, []);
   return (
     <>
       <ScrollView style={styles.passageContainer}>
         <Text style={styles.question}>
           Read the passage carefully and answer the questions that follow:
         </Text>
-        <Text style={styles.passageText}>{level1Data.passage.passage}</Text>
+        <Text style={styles.passageText}>{passage}</Text>
       </ScrollView>
       <Pressable
         style={styles.continueButton}

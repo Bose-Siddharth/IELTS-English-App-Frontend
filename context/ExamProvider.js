@@ -6,6 +6,8 @@ const ExamProvider = ({ children }) => {
   const [isTestRunning, setIsTestRunning] = useState(false);
   const [module, setModule] = useState(1);
   const [level, setLevel] = useState(1);
+  const [passage, setPassage] = useState();
+  const [instructions, setInstructions] = useState();
 
   return (
     <ExamContext.Provider
@@ -13,9 +15,13 @@ const ExamProvider = ({ children }) => {
         isTestRunning,
         module,
         level,
+        passage,
+        instructions,
         setIsTestRunning,
         setModule,
         setLevel,
+        setPassage,
+        setInstructions,
       }}
     >
       {children}

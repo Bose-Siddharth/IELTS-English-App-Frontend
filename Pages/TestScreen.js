@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import useHttp from "../hooks/useHttp";
-// import StopClock from "../components/StopClock";
+import Timer from "../components/Timer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useExam } from "../context/ExamProvider";
 
@@ -91,7 +91,9 @@ const TestScreen = () => {
           <View style={styles.heading}>
             <Text style={styles.headingText}>Questions</Text>
           </View>
-          <View style={styles.timer}>{/* <StopClock /> */}</View>
+          <View style={styles.timer}>
+            <Timer time={40} />
+          </View>
         </View>
         <View style={styles.questionsList}>
           <FlatList
@@ -145,6 +147,7 @@ const styles = StyleSheet.create({
   timerWithHeading: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   heading: {},
   headingText: {
