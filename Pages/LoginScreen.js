@@ -24,7 +24,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required("Password is required"),
 });
 
-function LoginScreen({}) {
+function LoginScreen({navigation}) {
   const { setIsLoggedIn, isLoggedIn } = useLogin();
   const [error, setError] = useState("");
   const { postRequest } = useHttp();
@@ -60,7 +60,9 @@ function LoginScreen({}) {
   }
 
   function forgotPassHandler() {
-    Alert.alert("Pass Change");
+    //Alert.alert("Redirecting to Forget Password");
+    navigation.navigate("ForgetPassword");
+    //clearStates();
   }
 
   return (

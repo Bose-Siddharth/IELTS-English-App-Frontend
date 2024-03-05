@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 const ExamContext = createContext();
 
 const ExamProvider = ({ children }) => {
-  const [isTestRunning, setIsTestRunning] = useState(true);
+  const [isTestRunning, setIsTestRunning] = useState(false);
 
   return (
     <ExamContext.Provider value={{ isTestRunning, setIsTestRunning }}>
