@@ -1,8 +1,10 @@
 import { View, Text, ScrollView, StyleSheet, Pressable } from "react-native";
 import React from "react";
 import { level1Data } from "../constants/mod1level1";
+import { useNavigation } from "@react-navigation/native";
 
 const PassageScreen = () => {
+  const navigation = useNavigation();
   console.log(level1Data);
   return (
     <>
@@ -12,7 +14,12 @@ const PassageScreen = () => {
         </Text>
         <Text style={styles.passageText}>{level1Data.passage.passage}</Text>
       </ScrollView>
-      <Pressable style={styles.continueButton}>
+      <Pressable
+        style={styles.continueButton}
+        onPress={() => {
+          navigation.navigate("Test");
+        }}
+      >
         <Text style={styles.continueText}>Proceed to Test</Text>
       </Pressable>
     </>

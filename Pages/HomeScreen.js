@@ -11,13 +11,17 @@ const HomeScreen = () => {
       locked: false,
       modalVisible: modalVisible,
       setModalVisible: setModalVisible,
+      module: 1,
+      level: 1,
     },
     {
       title: "Listening",
       icon: "hard-of-hearing",
-      locked: true,
+      locked: false,
       modalVisible: modalVisible,
       setModalVisible: setModalVisible,
+      module: 2,
+      level: 1,
     },
     {
       title: "Speaking",
@@ -25,6 +29,8 @@ const HomeScreen = () => {
       locked: true,
       modalVisible: modalVisible,
       setModalVisible: setModalVisible,
+      module: 3,
+      level: 1,
     },
     {
       title: "Writing",
@@ -32,6 +38,8 @@ const HomeScreen = () => {
       locked: true,
       modalVisible: modalVisible,
       setModalVisible: setModalVisible,
+      module: 4,
+      level: 1,
     },
   ];
   return (

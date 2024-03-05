@@ -17,14 +17,16 @@ import { useLogin } from "../context/LoginProvider";
 import HomeScreen from "../Pages/HomeScreen";
 import ProgressScreen from "../Pages/ProgressScreen";
 import Layout from "../Pages/Layout";
+import TestLayout from "../Pages/TestLayout";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import TestScreen from "../Pages/TestScreen";
 import PassageScreen from "../Pages/PassageScreen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import useHttp from "../hooks/useHttp";
-import { useQuery } from "react-query";
+import { useExam } from "../context/ExamProvider";
 
-// Custom drawer content component
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
+
 function CustomDrawerContent({ navigation }) {
   const { setIsLoggedIn } = useLogin();
   return (
@@ -84,39 +86,7 @@ function CustomDrawerContent({ navigation }) {
 
 const Drawer = createDrawerNavigator();
 
-// const CustomDrawerHeader = ({ navigation }) => {
-//   return (
-//     <TouchableOpacity style={styles.menuButton}>
-//       <Icon
-//         name="bars"
-//         size={24}
-//         color="#000000"
-//         onPress={() => navigation.toggleDrawer()}
-//       />
-//     </TouchableOpacity>
-//   );
-// };
-
-export default function AppRouter() {
-  // const [loading, setLoading] = useState(false);
-  // const { getRequest } = useHttp();
-  // const { setIsLoggedIn } = useLogin();
-  // checkIsAuthenticated = async () => {
-  //   setLoading(true);
-  //   const token = await AsyncStorage.getItem("token");
-  //   const response = await getRequest("/auth/test", token);
-  //   if (!response) {
-  //     await AsyncStorage.clear();
-  //     setIsLoggedIn(false);
-  //   }
-  //   return response?.success;
-  // };
-  // useEffect(() => {
-  //   const data = useQuery("checkIsAuthenticated", checkIsAuthenticated, {
-  //     refetchInterval: 65000,
-  //   });
-  //   fetchDataAndLogState();
-  // }, []);
+const DrawerRouter = () => {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -140,23 +110,65 @@ export default function AppRouter() {
           </Layout>
         )}
       </Drawer.Screen>
-      <Drawer.Screen name="Passage">
-        {() => (
-          <Layout title="Passage">
-            <PassageScreen />
-          </Layout>
-        )}
-      </Drawer.Screen>
-      <Drawer.Screen name="Test">
+      <Drawer.Screen name="Analysis">
         {() => (
           <Layout>
-            <TestScreen />
+            <ProgressScreen />
           </Layout>
         )}
       </Drawer.Screen>
       {/* Add more screens as needed */}
     </Drawer.Navigator>
   );
+};
+
+const StackRouter = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Test">
+        {() => (
+          <TestLayout>
+            <TestScreen />
+          </TestLayout>
+        )}
+      </Stack.Screen>
+      <Stack.Screen name="Passage">
+        {() => (
+          <TestLayout>
+            <PassageScreen />
+          </TestLayout>
+        )}
+      </Stack.Screen>
+    </Stack.Navigator>
+  );
+};
+
+export default function AppRouter() {
+  // const [loading, setLoading] = useState(false);
+  // const { getRequest } = useHttp();
+  // const { setIsLoggedIn } = useLogin();
+  // checkIsAuthenticated = async () => {
+  //   setLoading(true);
+  //   const token = await AsyncStorage.getItem("token");
+  //   const response = await getRequest("/auth/test", token);
+  //   if (!response) {
+  //     await AsyncStorage.clear();
+  //     setIsLoggedIn(false);
+  //   }
+  //   return response?.success;
+  // };
+  // useEffect(() => {
+  //   const data = useQuery("checkIsAuthenticated", checkIsAuthenticated, {
+  //     refetchInterval: 65000,
+  //   });
+  //   fetchDataAndLogState();
+  // }, []);
+  const { isTestRunning } = useExam();
+  return <>{isTestRunning ? <StackRouter /> : <DrawerRouter />}</>;
 }
 
 const styles = StyleSheet.create({

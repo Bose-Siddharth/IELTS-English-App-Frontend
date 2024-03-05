@@ -5,63 +5,85 @@ import {
   FlatList,
   Pressable,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { level1Data } from "../constants/mod1level1";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import useHttp from "../hooks/useHttp";
 // import StopClock from "../components/StopClock";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useLogin } from "../context/LoginProvider";
+import { useExam } from "../context/ExamProvider";
 
 // const TestScreen = ({ module, level }) => {
-const TestScreen = ({ module = "module1", level = "level1" }) => {
+const TestScreen = () => {
   const { getRequest } = useHttp();
-  const { setIsLoggedIn } = useLogin();
-  const getQuestions = async () => {
-    const token = await AsyncStorage.getItem("token");
-    const response = await getRequest(
-      `/exam/${module}/${level}/questions`,
-      token,
-      setIsLoggedIn
-    );
-    console.log(response);
-    // console.log("API RESPONSE:", response);
-  };
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { module, level } = useExam();
+  console.log("====================================");
+  console.log(module, level);
+  console.log("====================================");
   useEffect(() => {
-    getQuestions();
+    const fetchQuestions = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        const response = await getRequest(
+          `/exam/module${module}/level${level}/questions`,
+          token
+        );
+        setQuestions(response);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
+    };
+
+    fetchQuestions();
+
+    // This effect runs before the component loads
+    return () => {
+      // Cleanup if needed
+    };
   }, []);
-  const data = level1Data.questions.questions;
-  const [currentQuestion, setCurrentQuestion] = useState(1);
-  console.log(data[currentQuestion].options[0].value);
+
+  console.log("====================================");
+  console.log(questions);
+  console.log("====================================");
   const listComponent = ({ item }) => {
     return (
-      item.id >= 1 && (
-        <Pressable
-          style={[
-            styles.listItem,
-            currentQuestion === item.id && {
-              backgroundColor: "blue",
-            },
-          ]}
-          onPress={() => {
-            console.log("clicked");
-            setCurrentQuestion(item.id);
-          }}
+      <Pressable
+        style={[
+          styles.listItem,
+          currentQuestion === item.id - 1 && {
+            backgroundColor: "blue",
+          },
+        ]}
+        onPress={() => {
+          console.log("clicked");
+          setCurrentQuestion(item.id - 1);
+        }}
+      >
+        <Text
+          style={
+            currentQuestion === item.id - 1
+              ? { color: "white" }
+              : { color: "blue" }
+          }
         >
-          <Text
-            style={
-              currentQuestion === item.id
-                ? { color: "white" }
-                : { color: "blue" }
-            }
-          >
-            {item.id}
-          </Text>
-        </Pressable>
-      )
+          {item.id}
+        </Text>
+      </Pressable>
     );
   };
-
+  if (loading && questions) {
+    return (
+      <ActivityIndicator
+        style={{ flex: 1, alignSelf: "center" }}
+        size={64}
+        color={"blue"}
+      />
+    );
+  }
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -73,23 +95,24 @@ const TestScreen = ({ module = "module1", level = "level1" }) => {
         </View>
         <View style={styles.questionsList}>
           <FlatList
-            data={data}
+            data={questions.questions}
             renderItem={listComponent}
             horizontal={true}
             keyExtractor={(item) => item.id}
+            showsHorizontalScrollIndicator={false}
           />
         </View>
       </View>
       <View style={styles.testContainer}>
         <View style={styles.question}>
           <Text style={styles.questionText}>
-            {`${data[currentQuestion].id}. ${data[currentQuestion].question}`}
+            {questions?.questions[currentQuestion]?.question}
           </Text>
         </View>
         <ScrollView style={styles.answerContainer}>
           {/* Map the answers */}
           <View>
-            {data[currentQuestion].options.map((option) => {
+            {questions?.questions[currentQuestion]?.options?.map((option) => {
               return (
                 <Pressable style={styles.answers} key={option.key}>
                   <Text style={styles.key}>{option.key}</Text>
