@@ -9,7 +9,7 @@ import {
   Dimensions
 } from "react-native";
 
-export default function ForgetPasswordScreen() {
+export default function ForgetPasswordScreen({navigation}) {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
 
@@ -18,7 +18,9 @@ export default function ForgetPasswordScreen() {
     return regex.test(email);
   };
 
-  const handleResetPassword = async () => {
+  const handleResetPassword = async () => {    
+    console.log("Pressed");
+    //navigation.navigate('GetOTP');
     if (!email) {
       setEmailError("Please enter an email!");
       return;
@@ -47,9 +49,10 @@ export default function ForgetPasswordScreen() {
       );
       const parsedData = await response.json();
       console.log(parsedData);
+      navigation.navigate('GetOTP');
     } catch (error) {
       console.error(error);
-    }
+    }    
   };
 
   return (
@@ -73,7 +76,7 @@ export default function ForgetPasswordScreen() {
             onPress={handleResetPassword}
             style={styles.button}
           >
-            <Text style={[styles.textWhite, styles.submitText, styles.textUpper]}>Reset Password</Text>
+            <Text style={[styles.textWhite, styles.submitText, styles.textUpper]}>Forget Password</Text>
           </Pressable>
         </View>
       </ImageBackground>

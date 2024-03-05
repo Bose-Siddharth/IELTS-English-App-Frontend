@@ -1,140 +1,133 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  TextInput,
-  ImageBackground,
-  Dimensions
-} from "react-native";
+import React, { useState } from 'react'; 
+import { 
+    View, Text, TextInput, 
+    TouchableOpacity, StyleSheet 
+} from 'react-native'; 
 
-export default function OtpScreen() {
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
+const OtpScreen = () => { 
+    const { email, password } = useState('');
 
-  const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
+    const [userInput, setUserInput] = useState(''); 
+    const [isValid, setIsValid] = useState(null); 
 
-  const handleResetPassword = async () => {
-    if (!email) {
-      setEmailError("Please enter an email!");
-      return;
-    }
+    const validateOtp = async () => { 
+      console.log('arigato gozaimasu');
+        try {
+            const response = await fetch('http://192.168.90.24:8080/api/auth/verifyotp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ otp: userInput, email, password }),
+            });
+            const data = await response.json();
 
-    if (!validateEmail(email)) {
-      setEmailError("Please enter a valid email address!");
-      return;
-    }
-
-    setEmailError("");
-
-    try {
-      const data = {
-        email: email,
-      };
-      const response = await fetch(
-        "http://192.168.90.24:8080/api/auth/forgetpassword",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",     
-          },
-          body: JSON.stringify(data),
+            if (data.isValid) { 
+                setIsValid(true); 
+            } else { 
+                setIsValid(false); 
+            }
+        } catch (error) {
+            console.error('Error validating OTP:', error);
         }
-      );
-      const parsedData = await response.json();
-      console.log(parsedData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    }; 
 
-  return (
-    <View style={styles.container}>
-      <ImageBackground source={require("../assets/appBg.png")} style={{ flex: 1, backgroundColor: "rgba(255, 255, 255, 0.1)" }}>
-        <View style={styles.headingContainer}>
-          <Text style={[styles.headerText, styles.textCenter]}>Forget Password</Text>
-          <Text style={[styles.headerSubText, styles.textCenter]}>Enter your email to get OTP and reset password.</Text>
-          <TextInput
-            autoCorrect={false}
-            autoCapitalize="none"
-            label="Email"
-            mode="outlined"
-            placeholder="Email"
-            style={styles.input}
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-          />
-          {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
-          <Pressable
-            onPress={handleResetPassword}
-            style={styles.button}
-          >
-            <Text style={[styles.textWhite, styles.submitText, styles.textUpper]}>Forget Password</Text>
-          </Pressable>
-        </View>
-      </ImageBackground>
-    </View>
-  );
-}
+    return ( 
+        <View style={styles.container}> 
+            <View style={styles.box}> 
+                <Text style={styles.title}> 
+                    OTP Validator 
+                </Text> 
+                <TextInput 
+                    style={styles.input} 
+                    placeholder="Enter OTP"
+                    value={userInput} 
+                    onChangeText={setUserInput} 
+                />
+                <TextInput 
+                  style={styles.input} 
+                  placeholder="Enter Email"
+                  value={email}  
+                /> 
+                <TextInput 
+                  style={styles.input} 
+                  placeholder="Enter Password"
+                  value={password}  
+                  secureTextEntry={true}
+                /> 
+                <TouchableOpacity style={styles.button} 
+                    onPress={validateOtp}> 
+                    <Text style={styles.buttonText}> 
+                        Validate OTP 
+                    </Text> 
+                </TouchableOpacity> 
+                {isValid === true && 
+                    <Text style={styles.validText}> 
+                        Valid OTP 
+                    </Text>} 
+                {isValid === false && 
+                    <Text style={styles.invalidText}> 
+                        Invalid OTP 
+                    </Text>} 
+            </View> 
+        </View> 
+    ); 
+}; 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    resizeMode: "cover",
-  },
-  headingContainer: {
-    height: "10%",
-    marginTop: "20%",
-    gap: 15,
-    alignItems: 'center',
-  },
-  headerText: {
-    color: "#1F41BB",
-    fontWeight: "700",
-    fontSize: 24,
-    textTransform: "uppercase",
-  },
-  textCenter: {
-    textAlign: "center",
-  },
-  headerSubText: {
-    fontSize: 16,
-    fontWeight: '400',
-  },
-  input: {
-    padding: 12,
-    width: "80%",
-    borderRadius: 8,
-    backgroundColor: "#e0e6f6",
-    borderWidth: 2,
-    borderColor: "#1F41BB",
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    borderRadius: 10,
-    width: Dimensions.get("window").width * 0.75,
-    backgroundColor: "blue",
-    paddingHorizontal: "9%",
-    paddingVertical: "5%",
-  },
-  textWhite: {
-    color: "white",
-  },
-  submitText: {
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  textUpper: {
-    textTransform: "uppercase",
-  },
-  errorText: {
-    color: "red",
-    textAlign: "center",
-  },
-});
+const styles = StyleSheet.create({ 
+    container: { 
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+    }, 
+    box: { 
+        width: '80%', 
+        backgroundColor: '#FFF', 
+        borderRadius: 10, 
+        padding: 20, 
+        shadowColor: '#000', 
+        shadowOffset: { 
+            width: 0, 
+            height: 2, 
+        }, 
+        shadowOpacity: 0.25, 
+        shadowRadius: 3.84, 
+        elevation: 5, 
+    }, 
+    title: { 
+        fontSize: 24, 
+        marginBottom: 20, 
+    }, 
+    button: { 
+        backgroundColor: '#007AFF', 
+        paddingHorizontal: 30, 
+        paddingVertical: 15, 
+        borderRadius: 5, 
+        marginTop: 20, 
+    }, 
+    buttonText: { 
+        color: '#FFF', 
+        fontSize: 18, 
+    }, 
+    input: { 
+        borderWidth: 1, 
+        borderColor: '#007AFF', 
+        borderRadius: 5, 
+        paddingHorizontal: 10, 
+        paddingVertical: 5, 
+        marginTop: 20, 
+        width: '100%', 
+    }, 
+    validText: { 
+        fontSize: 20, 
+        color: 'green', 
+        marginTop: 20, 
+    }, 
+    invalidText: { 
+        fontSize: 20, 
+        color: 'red', 
+        marginTop: 20, 
+    }, 
+}); 
+
+export default OtpScreen;

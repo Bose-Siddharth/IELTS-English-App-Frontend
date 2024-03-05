@@ -267,7 +267,6 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: "red",
-    // marginTop: 5,
   },
   icon: {
     backgroundColor: "#ccc",
